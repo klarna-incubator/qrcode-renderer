@@ -1,0 +1,43 @@
+name: CI
+
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Begin CI...
+        uses: actions/checkout@v2
+
+      - name: Use Node 12
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
+
+      - name: Use cached node_modules
+        uses: actions/cache@v1
+        with:
+          path: node_modules
+          key: nodeModules-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            nodeModules-
+
+      - name: Install dependencies
+        run: yarn install
+        env:
+          CI: true
+
+      - name: Lint
+        run: yarn lerna run lint --stream --parallel
+        env:
+          CI: true
+
+      - name: Test
+        run: yarn lerna exec --stream --parallel "yarn test --ci --maxWorkers=2 --passWithNoTests"
+        env:
+          CI: true
+
+      - name: Build
+        run: yarn lerna run build --stream
+        env:
+          CI: true
