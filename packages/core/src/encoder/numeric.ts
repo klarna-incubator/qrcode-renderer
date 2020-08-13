@@ -9,7 +9,12 @@ export default (input: string): Segment => {
   const numberOfGroups = Math.ceil(input.length / 3)
   const groups = Array(numberOfGroups)
     .fill(null)
-    .map((_, i) => input.substr(i * 3, 3))
+    .map((_, i) =>
+      input.slice(
+        i * 3 /* groups of 3 */,
+        i * 3 + 3 /* last index is index + 3 */
+      )
+    )
 
   const bitArray = new BitArray()
   bitArray.push(Number(Mode.NUMERIC).toString(2), 4) // mode
