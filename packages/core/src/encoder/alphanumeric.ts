@@ -4,12 +4,11 @@ import BitArray from './BitArray'
 
 const ENCODING_TABLE = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ $%*+-./:'
 
+/**
+ * Encoder for QR Code symbols (Version 1-H symbol)
+ */
 export default (input: string): Segment => {
   const bitArray = new BitArray()
-  bitArray.push(Number(Mode.ALPHANUMERIC).toString(2), 4) // mode
-  bitArray.push(Number(input.length).toString(2), 9) // input length
-
-  // data groups
   const encodedInput = input.split('').map(char => ENCODING_TABLE.indexOf(char))
   const numberOfGroups = Math.ceil(encodedInput.length / 2)
 
@@ -30,6 +29,6 @@ export default (input: string): Segment => {
   return {
     mode: Mode.ALPHANUMERIC,
     dataSize: input.length,
-    payload: bitArray.toUintArray(),
+    data: bitArray.toUintArray(),
   }
 }
