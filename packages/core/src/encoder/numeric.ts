@@ -19,16 +19,25 @@ export default (input: string): Segment => {
     )
 
   const bitArray = new BitArray()
-  groups.forEach((group, i) => {
+  for (const group of groups) {
     const bitFormat = Number(group).toString(2)
-    const bitLength = i !== groups.length - 1 ? 10 : bitFormat.length
-
-    bitArray.push(bitFormat, bitLength)
-  })
+    bitArray.push(bitFormat, groupLength(group))
+  }
 
   return {
     mode: Mode.NUMERIC,
     dataSize: input.length,
     data: bitArray.toString(),
+  }
+}
+
+const groupLength = (group: string) => {
+  switch (group.length) {
+    case 3:
+      return 10
+    case 2:
+      return 7
+    default:
+      return 4
   }
 }

@@ -20,6 +20,18 @@ describe('encoder > numeric', () => {
     expect(encodeNumeric(input)).toEqual(segment)
   })
 
+  it('encodes groups with a smaller bit count', () => {
+    const input = '12345'
+
+    const segment: Segment = {
+      mode: Mode.NUMERIC,
+      dataSize: input.length,
+      data: '00011110110101101',
+    }
+
+    expect(encodeNumeric(input)).toEqual(segment)
+  })
+
   describe('#canEncode', () => {
     it('is true for positive integers', () => {
       expect(canEncode('1234')).toBe(true)

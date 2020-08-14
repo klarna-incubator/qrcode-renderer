@@ -13,6 +13,10 @@ export default class BitArray {
     this.buffer.push(binary.padStart(length, '0'))
   }
 
+  public size() {
+    return this.toString().length
+  }
+
   public toString() {
     return this.buffer.join('')
   }
