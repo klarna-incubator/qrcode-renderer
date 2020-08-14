@@ -1,9 +1,9 @@
-import Mode from './mode'
-import { Segment } from './types'
-import BitArray from './BitArray'
+import Mode from '../mode'
+import { Segment } from '../types'
+import BitArray from '../BitArray'
 import TextEncoder from 'encoder/TextEncoder' // path defined in tsconfig to support both node.js and browsers
 
-export default (input: string): Segment => {
+export const encode = (input: string): Segment => {
   const bitArray = new BitArray()
   const utf8Input = Array.from(new TextEncoder().encode(input))
 

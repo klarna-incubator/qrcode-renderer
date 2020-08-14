@@ -1,6 +1,6 @@
-import Mode from './mode'
-import { Segment } from './types'
-import encodeByte from './byte'
+import Mode from '../mode'
+import { Segment } from '../types'
+import { encode } from './byte'
 
 describe('encoder > byte', () => {
   it('encodes the input and include Mode.BYTE', () => {
@@ -24,7 +24,7 @@ describe('encoder > byte', () => {
       data: result.join(''),
     }
 
-    expect(encodeByte(input)).toEqual(segment)
+    expect(encode(input)).toEqual(segment)
   })
 
   it('works with emojis (surrogate chars)', () => {
@@ -41,6 +41,6 @@ describe('encoder > byte', () => {
       data: result.join(''),
     }
 
-    expect(encodeByte(input)).toEqual(segment)
+    expect(encode(input)).toEqual(segment)
   })
 })

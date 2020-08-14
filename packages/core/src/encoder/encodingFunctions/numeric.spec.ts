@@ -1,6 +1,6 @@
-import Mode from './mode'
-import { Segment } from './types'
-import encodeNumeric, { canEncode } from './numeric'
+import Mode from '../mode'
+import { Segment } from '../types'
+import { encode, canEncode } from './numeric'
 
 describe('encoder > numeric', () => {
   it('encodes the input and include Mode.NUMERIC', () => {
@@ -17,7 +17,7 @@ describe('encoder > numeric', () => {
       data: result.join(''),
     }
 
-    expect(encodeNumeric(input)).toEqual(segment)
+    expect(encode(input)).toEqual(segment)
   })
 
   it('encodes groups with a smaller bit count', () => {
@@ -29,7 +29,7 @@ describe('encoder > numeric', () => {
       data: '00011110110101101',
     }
 
-    expect(encodeNumeric(input)).toEqual(segment)
+    expect(encode(input)).toEqual(segment)
   })
 
   describe('#canEncode', () => {

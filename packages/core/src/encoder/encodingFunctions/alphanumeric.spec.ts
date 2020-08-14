@@ -1,6 +1,6 @@
-import Mode from './mode'
-import { Segment } from './types'
-import encodeAlphanumeric, { canEncode } from './alphanumeric'
+import Mode from '../mode'
+import { Segment } from '../types'
+import { encode, canEncode } from './alphanumeric'
 
 describe('encoder > alphanumeric', () => {
   it('encodes the input and include Mode.ALPHANUMERIC', () => {
@@ -17,7 +17,7 @@ describe('encoder > alphanumeric', () => {
       data: result.join(''),
     }
 
-    expect(encodeAlphanumeric(input)).toEqual(segment)
+    expect(encode(input)).toEqual(segment)
   })
 
   describe('#canEncode', () => {
