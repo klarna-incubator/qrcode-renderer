@@ -1,5 +1,6 @@
 module.exports = {
   moduleNameMapper: {
-    'encoder/TextEncoder': '<rootDir>/src/encoder/TextEncoder',
+    'encoder/encodingFunctions/byte/TextEncoder':
+      '<rootDir>/src/encoder/encodingFunctions/byte/TextEncoder',
   },
 }

@@ -1,15 +1,12 @@
-import Mode from '../mode'
-import { Segment } from '../types'
-import BitArray from '../BitArray'
+import Mode from '../../mode'
+import { Segment } from '../segment'
+import BitArray from '../../BitArray'
 
 const ENCODING_TABLE = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ $%*+-./:'
 
 export const canEncode = (input: string) =>
   Array.from(input).every(char => ENCODING_TABLE.includes(char))
 
-/**
- * Encoder for QR Code symbols (Version 1-H symbol)
- */
 export const encode = (input: string): Segment => {
   const bitArray = new BitArray()
   const encodedInput = input.split('').map(char => ENCODING_TABLE.indexOf(char))

@@ -15,7 +15,9 @@
     "moduleResolution": "node",
     "baseUrl": "./",
     "paths": {
-      "encoder/TextEncoder": ["src/encoder/TextEncoder.browser"],
+      "encoder/encodingFunctions/byte/TextEncoder": [
+        "src/encoder/encodingFunctions/byte/TextEncoder.browser"
+      ],
       "*": ["src/*", "node_modules/*"]
     },
     "jsx": "react",

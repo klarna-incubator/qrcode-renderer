@@ -1,6 +1,6 @@
-import Mode from '../mode'
-import { Segment } from '../types'
-import { encode } from './byte'
+import Mode from '../../mode'
+import { Segment } from '../segment'
+import { encode } from '.'
 
 describe('encoder > byte', () => {
   it('encodes the input and include Mode.BYTE', () => {

@@ -1,4 +1,4 @@
-import { ModeValue } from './mode'
+import { ModeValue } from '../mode'
 
 export interface Segment {
   mode: ModeValue

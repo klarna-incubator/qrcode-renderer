@@ -1,4 +1,4 @@
-import { Level, levels } from './level'
+import { Level, levels } from '../level'
 import dataCodewords from './dataCodewords'
 
 const BYTE = 8

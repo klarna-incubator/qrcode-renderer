@@ -1,6 +1,6 @@
-import Mode from '../mode'
-import { Segment } from '../types'
-import { encode, canEncode } from './alphanumeric'
+import Mode from '../../mode'
+import { Segment } from '../segment'
+import { encode, canEncode } from '.'
 
 describe('encoder > alphanumeric', () => {
   it('encodes the input and include Mode.ALPHANUMERIC', () => {

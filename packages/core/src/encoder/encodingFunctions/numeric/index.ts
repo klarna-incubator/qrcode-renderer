@@ -1,12 +1,9 @@
-import Mode from '../mode'
-import { Segment } from '../types'
-import BitArray from '../BitArray'
+import Mode from '../../mode'
+import { Segment } from '../segment'
+import BitArray from '../../BitArray'
 
 export const canEncode = (input: string) => /^[0-9]+$/.test(input)
 
-/**
- * Encoder for QR Code symbols (Version 1-H symbol)
- */
 export const encode = (input: string): Segment => {
   const numberOfGroups = Math.ceil(input.length / 3)
   const groups = Array(numberOfGroups)
