@@ -32,6 +32,6 @@ export default (input: string): Segment => {
   return {
     mode: Mode.ALPHANUMERIC,
     dataSize: input.length,
-    data: bitArray.toUintArray(),
+    data: bitArray.toString(),
   }
 }

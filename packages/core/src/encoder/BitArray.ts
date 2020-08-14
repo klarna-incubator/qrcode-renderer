@@ -1,18 +1,25 @@
 export default class BitArray {
-  public static fromBinaryString(binary: string) {
-    return Uint8Array.from(binary.split('').map(Number))
-  }
-
   private buffer: string[] = []
 
-  public push(binary: string, length: number) {
+  public padStart(length: number) {
+    const { length: currentSize } = this.toString()
+
+    if (currentSize < length) {
+      this.buffer.unshift('0'.repeat(length - currentSize))
+    }
+  }
+
+  public push(binary: string, length: number = binary.length) {
     this.buffer.push(binary.padStart(length, '0'))
+  }
+
+  public toString() {
+    return this.buffer.join('')
   }
 
   public toUintArray() {
     return Uint8Array.from(
-      this.buffer
-        .join('')
+      this.toString()
         .split('')
         .map(Number)
     )

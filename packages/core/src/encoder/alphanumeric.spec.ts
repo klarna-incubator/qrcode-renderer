@@ -1,6 +1,5 @@
 import Mode from './mode'
 import { Segment } from './types'
-import BitArray from './BitArray'
 import encodeAlphanumeric, { canEncode } from './alphanumeric'
 
 describe('encoder > alphanumeric', () => {
@@ -15,7 +14,7 @@ describe('encoder > alphanumeric', () => {
     const segment: Segment = {
       mode: Mode.ALPHANUMERIC,
       dataSize: input.length,
-      data: BitArray.fromBinaryString(result.join('')),
+      data: result.join(''),
     }
 
     expect(encodeAlphanumeric(input)).toEqual(segment)

@@ -14,6 +14,6 @@ export default (input: string): Segment => {
   return {
     mode: Mode.BYTE,
     dataSize: utf8Input.length,
-    data: bitArray.toUintArray(),
+    data: bitArray.toString(),
   }
 }

@@ -1,6 +1,5 @@
 import Mode from './mode'
 import { Segment } from './types'
-import BitArray from './BitArray'
 import encodeNumeric, { canEncode } from './numeric'
 
 describe('encoder > numeric', () => {
@@ -15,7 +14,7 @@ describe('encoder > numeric', () => {
     const segment: Segment = {
       mode: Mode.NUMERIC,
       dataSize: input.length,
-      data: BitArray.fromBinaryString(result.join('')),
+      data: result.join(''),
     }
 
     expect(encodeNumeric(input)).toEqual(segment)

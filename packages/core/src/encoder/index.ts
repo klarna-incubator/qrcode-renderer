@@ -4,34 +4,56 @@ import encodeAlphanumeric, {
 import encodeNumeric, { canEncode as canEncodeNumeric } from './numeric'
 import encodeByte from './byte'
 import { Level } from './errorDetection/sizeByMode'
+import { selectErrorDetection } from './errorDetection'
+import BitArray from './BitArray'
+import { calculateCharacterCountSize } from './characterCount'
 
 type Input = string | number
 
 const createEncodedSegment = (input: string) => {
-  switch (true) {
-    case canEncodeAlphanumeric(input):
-      return encodeAlphanumeric(input)
-
-    case canEncodeNumeric(input):
-      return encodeNumeric(input)
-
-    // TODO: Add support to kanji
-
-    default:
-      return encodeByte(input)
+  if (canEncodeAlphanumeric(input)) {
+    return encodeAlphanumeric(input)
   }
+
+  if (canEncodeNumeric(input)) {
+    return encodeNumeric(input)
+  }
+
+  // TODO: Add support to kanji
+  return encodeByte(input)
 }
 
-const encoder = (input: Input, errorDetectionLevel?: Level) => {
+export interface EncoderOptions {
+  minimumVersion?: number
+  level?: Level
+}
+
+const encoder = (input: Input, options: EncoderOptions) => {
   const stringInput = input.toString()
 
   const segment = createEncodedSegment(stringInput)
-  // encode
-  // detect version
-  // encode size and add padding
-  // ?
+  const { version, size, level } = selectErrorDetection(
+    segment.mode,
+    options.minimumVersion,
+    options.level,
+    segment.dataSize
+  )
 
-  return stringInput
+  const buffer = new BitArray()
+
+  buffer.push(segment.mode, 4)
+  buffer.push(
+    segment.dataSize.toString(2),
+    calculateCharacterCountSize(segment.mode, version)
+  )
+  buffer.push(segment.data)
+  buffer.padStart(size)
+
+  return {
+    version,
+    level,
+    data: buffer.toUintArray(),
+  }
 }
 
 export default encoder

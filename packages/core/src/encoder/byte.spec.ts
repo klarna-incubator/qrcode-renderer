@@ -1,6 +1,5 @@
 import Mode from './mode'
 import { Segment } from './types'
-import BitArray from './BitArray'
 import encodeByte from './byte'
 
 describe('encoder > byte', () => {
@@ -22,7 +21,7 @@ describe('encoder > byte', () => {
     const segment: Segment = {
       mode: Mode.BYTE,
       dataSize: 10,
-      data: BitArray.fromBinaryString(result.join('')),
+      data: result.join(''),
     }
 
     expect(encodeByte(input)).toEqual(segment)
@@ -39,7 +38,7 @@ describe('encoder > byte', () => {
     const segment: Segment = {
       mode: Mode.BYTE,
       dataSize: 12,
-      data: BitArray.fromBinaryString(result.join('')),
+      data: result.join(''),
     }
 
     expect(encodeByte(input)).toEqual(segment)
