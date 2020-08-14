@@ -2,6 +2,8 @@ import Mode from './mode'
 import { Segment } from './types'
 import BitArray from './BitArray'
 
+export const canEncode = (input: string) => /^[0-9]+$/.test(input)
+
 /**
  * Encoder for QR Code symbols (Version 1-H symbol)
  */

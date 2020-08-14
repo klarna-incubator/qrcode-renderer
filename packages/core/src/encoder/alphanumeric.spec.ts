@@ -1,7 +1,7 @@
 import Mode from './mode'
 import { Segment } from './types'
 import BitArray from './BitArray'
-import encodeAlphanumeric from './alphanumeric'
+import encodeAlphanumeric, { canEncode } from './alphanumeric'
 
 describe('encoder > alphanumeric', () => {
   it('encodes the input and include Mode.ALPHANUMERIC', () => {
@@ -19,5 +19,22 @@ describe('encoder > alphanumeric', () => {
     }
 
     expect(encodeAlphanumeric(input)).toEqual(segment)
+  })
+
+  describe('#canEncode', () => {
+    it('is true for alphanumeric strings', () => {
+      expect(canEncode('POTATOS ARE TASTY')).toBe(true)
+      expect(canEncode('3132131')).toBe(true)
+      expect(canEncode('$POTATOS ARE TAST/Y.IES/')).toBe(true)
+    })
+
+    it('is false for non-alphanumeric strings', () => {
+      expect(canEncode('MYEMAIL@COLDMAIL.COM')).toBe(false)
+      expect(canEncode('💄')).toBe(false)
+    })
+
+    it('is false for lowercase characters', () => {
+      expect(canEncode('this is not alphanumeric')).toBe(false)
+    })
   })
 })

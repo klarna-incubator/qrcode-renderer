@@ -1,7 +1,7 @@
-import { ModeValues } from './mode'
+import { ModeValue } from './mode'
 
 export interface Segment {
-  mode: ModeValues
+  mode: ModeValue
   dataSize: number
   data: Uint8Array
 }

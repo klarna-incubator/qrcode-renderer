@@ -5,6 +5,6 @@ const Mode = {
   KANJI: 0b1000,
 } as const
 
-export type ModeKeys = keyof typeof Mode
-export type ModeValues = typeof Mode[ModeKeys]
+export type ModeKey = keyof typeof Mode
+export type ModeValue = typeof Mode[ModeKey]
 export default Mode
