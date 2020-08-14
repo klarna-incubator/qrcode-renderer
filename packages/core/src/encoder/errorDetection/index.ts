@@ -1,0 +1,68 @@
+import { ModeValue } from '../mode'
+import { getVersionSizes, getSize, levels, Level } from '../sizeByMode'
+
+export const selectErrorDetection = (
+  mode: ModeValue,
+  version: number | undefined,
+  level: Level | undefined,
+  dataSize: number
+) => {
+  if (version && (version < 1 || version > 40)) {
+    throw new Error('Invalid QRCode version provided') // COMBAK: improve error handling
+  }
+
+  const targetVersion = version ?? findVersion(mode, level, dataSize)
+  const targetLevel = level ?? findLevel(mode, targetVersion, dataSize)
+  const size = getSize(mode, targetVersion, targetLevel)
+
+  return {
+    version: targetVersion,
+    level: targetLevel,
+    size,
+  }
+}
+
+const findVersion = (
+  mode: ModeValue,
+  level: Level | undefined,
+  dataSize: number
+) => {
+  for (let i = 0; i < 40; i++) {
+    const version = i + 1
+    const versionSizes = getVersionSizes(mode, version)
+
+    /**
+     * The level was not set by the user and one of the levels
+     * in the current version can hold the data size
+     */
+    if (!level && Math.max(...versionSizes) >= dataSize) {
+      return version
+    }
+
+    /**
+     * The level was set by the user and the current version and level
+     * can hold the data size
+     */
+    if (level && versionSizes[levels.indexOf(level)] >= dataSize) {
+      return version
+    }
+  }
+
+  // :TODO revisit the error message
+  throw new Error('The data size cannot be encoded in a QR Code')
+}
+
+const findLevel = (mode: ModeValue, version: number, dataSize: number) => {
+  const versionSizes = getVersionSizes(mode, version)
+
+  // reverse the array to find the highest level that can hold the data size
+  const size = Array.from(versionSizes)
+    .reverse()
+    .find((size: number) => size >= dataSize)
+
+  if (size != null) {
+    return levels[versionSizes.indexOf(size)]
+  }
+
+  throw new Error(`The provided version (${version}) cannot hold the data size`)
+}
