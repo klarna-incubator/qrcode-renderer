@@ -1,7 +1,5 @@
 import Mode, { ModeValue } from '../mode'
-
-export const levels = ['L', 'M', 'Q', 'H'] as const
-export type Level = typeof levels[number]
+import { Level, levels } from '../level'
 
 // prettier-ignore
 export const sizeByMode = {

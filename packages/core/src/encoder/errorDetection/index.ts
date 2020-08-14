@@ -1,5 +1,6 @@
 import { ModeValue } from '../mode'
-import { getVersionSizes, getSize, levels, Level } from './sizeByMode'
+import { Level, levels } from '../level'
+import { getVersionSizes, getSize } from './sizeByMode'
 
 export const selectErrorDetection = (
   mode: ModeValue,
