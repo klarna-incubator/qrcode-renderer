@@ -1,5 +1,6 @@
 import { ModeValue } from '../mode'
 import { Level, levels } from '../level'
+import { ensure } from '../ensure'
 import { getVersionSizes, getSize } from './sizeByMode'
 
 export const selectErrorDetection = (
@@ -57,9 +58,10 @@ const findLevel = (mode: ModeValue, version: number, dataSize: number) => {
   const versionSizes = getVersionSizes(mode, version)
 
   // reverse the array to find the highest level that can hold the data size
-  const size = Array.from(versionSizes)
-    .reverse()
-    .find((size: number) => size >= dataSize) as number
+  const size = ensure(
+    size => size >= dataSize,
+    Array.from(versionSizes).reverse()
+  )
 
   return levels[versionSizes.indexOf(size)]
 }
