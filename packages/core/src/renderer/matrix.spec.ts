@@ -11,5 +11,7 @@ describe('renderer > matrix > generateMatrix', () => {
       .map(row => row.slice(0, FINDER_PATTERN_OUTER_SIZE))
 
     expect(finderPatternArea).toEqual(FINDER_PATTERN)
+
+    console.log(simpleStringMatrix)
   })
 })
