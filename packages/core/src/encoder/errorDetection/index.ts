@@ -59,11 +59,7 @@ const findLevel = (mode: ModeValue, version: number, dataSize: number) => {
   // reverse the array to find the highest level that can hold the data size
   const size = Array.from(versionSizes)
     .reverse()
-    .find((size: number) => size >= dataSize)
+    .find((size: number) => size >= dataSize) as number
 
-  if (size != null) {
-    return levels[versionSizes.indexOf(size)]
-  }
-
-  throw new Error(`The provided version (${version}) cannot hold the data size`)
+  return levels[versionSizes.indexOf(size)]
 }
