@@ -45,4 +45,12 @@ describe('encoder > errorDetection', () => {
       )
     })
   })
+
+  describe('with a data size bigger than the minimum version selected', () => {
+    it('selects the smallest version bigger than the minimum version that can fit the data size', () => {
+      expect(
+        selectErrorDetection(Mode.NUMERIC, 1, undefined, 45)
+      ).toHaveProperty('version', 2)
+    })
+  })
 })

@@ -3,15 +3,15 @@ import { getVersionSizes, getSize, levels, Level } from '../sizeByMode'
 
 export const selectErrorDetection = (
   mode: ModeValue,
-  version: number | undefined,
+  minimumVersion: number | undefined,
   level: Level | undefined,
   dataSize: number
 ) => {
-  if (version && (version < 1 || version > 40)) {
+  if (minimumVersion && (minimumVersion < 1 || minimumVersion > 40)) {
     throw new Error('Invalid QRCode version provided') // COMBAK: improve error handling
   }
 
-  const targetVersion = version ?? findVersion(mode, level, dataSize)
+  const targetVersion = findVersion(mode, level, dataSize, minimumVersion)
   const targetLevel = level ?? findLevel(mode, targetVersion, dataSize)
   const size = getSize(mode, targetVersion, targetLevel)
 
@@ -25,9 +25,10 @@ export const selectErrorDetection = (
 const findVersion = (
   mode: ModeValue,
   level: Level | undefined,
-  dataSize: number
+  dataSize: number,
+  minimumVersion = 1
 ) => {
-  for (let i = 0; i < 40; i++) {
+  for (let i = minimumVersion - 1; i < 40; i++) {
     const version = i + 1
     const versionSizes = getVersionSizes(mode, version)
 
