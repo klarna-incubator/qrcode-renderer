@@ -3,6 +3,8 @@ import { Segment } from '../types'
 import BitArray from '../BitArray'
 import TextEncoder from 'encoder/TextEncoder' // path defined in tsconfig to support both node.js and browsers
 
+export const canEncode = (_input: string) => true
+
 export const encode = (input: string): Segment => {
   const bitArray = new BitArray()
   const utf8Input = Array.from(new TextEncoder().encode(input))

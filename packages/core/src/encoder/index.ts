@@ -6,6 +6,7 @@ import { selectErrorDetection } from './errorDetection'
 import BitArray from './BitArray'
 import { calculateCharacterCountSize } from './characterCount'
 import { createEndPadding } from './padding'
+import { ensure } from './ensure'
 
 type Input = string | number
 
@@ -14,23 +15,17 @@ export interface EncoderOptions {
   level?: Level
 }
 
-const createEncodedSegment = (input: string) => {
-  if (numericEncoder.canEncode(input)) {
-    return numericEncoder.encode(input)
-  }
-
-  if (alphanumericEncoder.canEncode(input)) {
-    return alphanumericEncoder.encode(input)
-  }
-
-  // TODO: Add support to kanji
-  return byteEncoder.encode(input)
-}
+const encodeSegment = (input: string) =>
+  ensure(encoder => encoder.canEncode(input), [
+    numericEncoder,
+    alphanumericEncoder,
+    byteEncoder,
+  ]).encode(input)
 
 const encoder = (input: Input, options: EncoderOptions = {}) => {
   const stringInput = input.toString()
 
-  const segment = createEncodedSegment(stringInput)
+  const segment = encodeSegment(stringInput)
   const { version, level } = selectErrorDetection(
     segment.mode,
     options.minimumVersion,
