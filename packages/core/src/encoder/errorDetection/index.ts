@@ -1,5 +1,5 @@
 import { ModeValue } from '../mode'
-import { getVersionSizes, getSize, levels, Level } from '../sizeByMode'
+import { getVersionSizes, getSize, levels, Level } from './sizeByMode'
 
 export const selectErrorDetection = (
   mode: ModeValue,
@@ -8,7 +8,7 @@ export const selectErrorDetection = (
   dataSize: number
 ) => {
   if (minimumVersion && (minimumVersion < 1 || minimumVersion > 40)) {
-    throw new Error('Invalid QRCode version provided') // COMBAK: improve error handling
+    throw new Error('Invalid QR Code version provided')
   }
 
   const targetVersion = findVersion(mode, level, dataSize, minimumVersion)
@@ -49,8 +49,7 @@ const findVersion = (
     }
   }
 
-  // :TODO revisit the error message
-  throw new Error('The data size cannot be encoded in a QR Code')
+  throw new Error(`The data size (${dataSize}) cannot be encoded in a QR Code`)
 }
 
 const findLevel = (mode: ModeValue, version: number, dataSize: number) => {

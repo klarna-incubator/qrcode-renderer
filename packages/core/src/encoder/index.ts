@@ -3,7 +3,7 @@ import encodeAlphanumeric, {
 } from './alphanumeric'
 import encodeNumeric, { canEncode as canEncodeNumeric } from './numeric'
 import encodeByte from './byte'
-import * as ErrorDetection from './errorDetection'
+import { Level } from './errorDetection/sizeByMode'
 
 type Input = string | number
 
@@ -22,7 +22,7 @@ const createEncodedSegment = (input: string) => {
   }
 }
 
-const encoder = (input: Input, errorDetectionLevel?: ErrorDetection.Level) => {
+const encoder = (input: Input, errorDetectionLevel?: Level) => {
   const stringInput = input.toString()
 
   const segment = createEncodedSegment(stringInput)
