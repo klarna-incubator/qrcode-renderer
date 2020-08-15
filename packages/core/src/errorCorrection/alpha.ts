@@ -1,6 +1,8 @@
 const log2 = (n: number) => Math.log(n) / Math.log(2)
 
-// get exponent from GF(256)
+/**
+ * logAlpha := gf -> alpha exponent
+ */
 export const logAlpha = (n: number): number => {
   const log2n = log2(n)
 
@@ -14,7 +16,9 @@ export const logAlpha = (n: number): number => {
   return logAlpha(half) + 1
 }
 
-// get GF(256) from exponent
+/**
+ * antilogAlpha := alpha exponent -> gf
+ */
 export const antilogAlpha = (exponent: number): number => {
   if (exponent < 8) {
     return 2 ** exponent
