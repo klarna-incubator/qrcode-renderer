@@ -25,7 +25,7 @@ export const generateMatrix = (encodingResult: EncodingResult): Matrix => {
     // add Finder pattern
     for (let x = 0; x < FINDER_PATTERN_OUTER_SIZE; x++) {
       for (let y = 0; y < FINDER_PATTERN_OUTER_SIZE; y++) {
-        matrix[coordinates[1] + y][coordinates[0] + x] = FINDER_PATTERN[y][x]
+        matrix[coordinates[0] + x][coordinates[1] + y] = FINDER_PATTERN[x][y]
       }
     }
 
@@ -36,8 +36,8 @@ export const generateMatrix = (encodingResult: EncodingResult): Matrix => {
       x <= FINDER_PATTERN_OUTER_SIZE && coordinates[0] + x < qrCodeSize;
       x++
     ) {
-      matrix[coordinates[1] + (isHigher ? -1 : FINDER_PATTERN_OUTER_SIZE)][
-        coordinates[0] + x
+      matrix[coordinates[0] + x][
+        coordinates[1] + (isHigher ? -1 : FINDER_PATTERN_OUTER_SIZE)
       ] = Pixel.WHITE
     }
 
@@ -48,8 +48,8 @@ export const generateMatrix = (encodingResult: EncodingResult): Matrix => {
       y <= FINDER_PATTERN_OUTER_SIZE && coordinates[1] + y < qrCodeSize;
       y++
     ) {
-      matrix[coordinates[1] + y][
-        coordinates[0] + (isLeft ? -1 : FINDER_PATTERN_OUTER_SIZE)
+      matrix[coordinates[0] + (isLeft ? -1 : FINDER_PATTERN_OUTER_SIZE)][
+        coordinates[1] + y
       ] = Pixel.WHITE
     }
   }
@@ -62,7 +62,7 @@ export const generateMatrix = (encodingResult: EncodingResult): Matrix => {
   const [darkModuleX, darkModuleY] = calculateDarkModuleCoordinates(
     encodingResult
   )
-  matrix[darkModuleY][darkModuleX] = DarkModule
+  matrix[darkModuleX][darkModuleY] = DarkModule
 
   // TODO: reserve version information area
   // TODO: place the data bits
