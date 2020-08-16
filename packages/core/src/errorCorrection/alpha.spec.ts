@@ -28,7 +28,7 @@ describe('errorCorrection > alpha', () => {
 
   describe('#antilogAlpha', () => {
     it('is the inverse of logAlpha for GF(256) numbers', () => {
-      for (let i = 0; i < 256; ++i) {
+      for (let i = 1; i < 256; ++i) {
         expect(antilogAlpha(logAlpha(i))).toBe(i)
       }
     })

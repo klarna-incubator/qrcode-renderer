@@ -1,43 +1,68 @@
 const log2 = (n: number) => Math.log(n) / Math.log(2)
 
-const ensureGF256 = (method: string, n: number) => {
-  if (n > 255 || n < 0) {
-    throw new Error(`${method} can't be used with a non-GF number (${n})`)
-  }
-}
+const logMemo: Record<number, number> = {}
+const antilogMemo: Record<number, number> = {}
 
 /**
  * logAlpha := gf -> alpha exponent
  */
 export const logAlpha = (n: number): number => {
-  ensureGF256('logAlpha', n)
+  n = Math.abs(n) % 256
+
+  if (logMemo[n] !== undefined) {
+    return logMemo[n]
+  }
+
   const log2n = log2(n)
 
   // If n is a base of 2, use it
   if (Math.floor(log2n) === log2n) {
+    logMemo[n] = log2n
+    antilogMemo[log2n] = n
     return log2n
   }
 
   const half = (n % 2 ? n ^ 285 : n) / 2
+  const result = logAlpha(half) + 1
 
-  return logAlpha(half) + 1
+  logMemo[n] = result
+  antilogMemo[result] = n
+  return result
 }
 
 /**
  * antilogAlpha := alpha exponent -> gf
  */
 export const antilogAlpha = (exponent: number): number => {
-  ensureGF256('antilogAlpha', exponent)
+  exponent = Math.abs(exponent) % 255
+
+  if (antilogMemo[exponent] !== undefined) {
+    return antilogMemo[exponent]
+  }
+
   if (exponent < 8) {
-    return 2 ** exponent
+    const result = 2 ** exponent
+
+    antilogMemo[exponent] = result
+    logMemo[result] = exponent
+
+    return result
   }
 
   const previousAntilog = antilogAlpha(exponent - 1)
   const nextPower = 2 * previousAntilog
 
   if (nextPower >= 256) {
-    return nextPower ^ 285
+    const result = nextPower ^ 285
+
+    antilogMemo[exponent] = result
+    logMemo[result] = exponent
+
+    return result
   }
+
+  antilogMemo[exponent] = nextPower
+  logMemo[nextPower] = exponent
 
   return nextPower
 }
