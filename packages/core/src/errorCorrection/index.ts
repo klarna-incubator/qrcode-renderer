@@ -1,5 +1,5 @@
 import { Level } from '../level'
-import { ecCodewordsPerVersion } from './eccodewordsPerVersion'
+import { ecCodewordsPerVersion } from './ecCodewordsPerVersion'
 import { createGeneratorPolinomial } from './generatorPolinomial'
 import { groupCodewordsInBlocks } from './groupCodewordsInBlocks'
 import { Polinomial } from './Polinomial'
