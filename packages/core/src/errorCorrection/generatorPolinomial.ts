@@ -1,6 +1,11 @@
 import { Polinomial } from './Polinomial'
 
-export const generatorPolinomial = (_numberOfCodewords: number) => {
-  // TODO: make this recurse based on numberOfCodewords
-  return Polinomial.fromCoef([1, 1]).multiply(Polinomial.fromCoef([1, 2]))
+export const generatorPolinomial = (numberOfCodewords: number): Polinomial => {
+  if (numberOfCodewords === 1) {
+    return Polinomial.fromCoefExponents({ 0: 0, 1: 0 })
+  }
+
+  return generatorPolinomial(numberOfCodewords - 1).multiply(
+    Polinomial.fromCoefExponents({ 0: numberOfCodewords - 1, 1: 0 })
+  )
 }

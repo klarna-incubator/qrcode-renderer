@@ -78,8 +78,7 @@ export class Polinomial {
 
   sum(target: Polinomial) {
     return target.map(
-      // TODO: check if we can XOR instead
-      (coefficient, power) => this.coefficientAtPower(power) + coefficient
+      (coefficient, power) => this.coefficientAtPower(power) ^ coefficient
     )
   }
 
@@ -89,7 +88,10 @@ export class Polinomial {
     ).map(([lefthandSidePower, exponent]) =>
       target.mapExponent(([righthandSidePower, targetExponent]) => [
         Number(lefthandSidePower) + Number(righthandSidePower),
-        exponent + targetExponent,
+        (exponent +
+          targetExponent +
+          Math.floor((exponent + targetExponent) / 256)) %
+          256,
       ])
     )
 
@@ -98,5 +100,9 @@ export class Polinomial {
 
   toCoef() {
     return this.coefficients
+  }
+
+  toExponents() {
+    return this.exponents
   }
 }
