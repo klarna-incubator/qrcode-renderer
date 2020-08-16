@@ -1,7 +1,7 @@
 import * as alphanumericEncoder from './encodingFunctions/alphanumeric'
 import * as numericEncoder from './encodingFunctions/numeric'
 import * as byteEncoder from './encodingFunctions/byte'
-import { Level } from './level'
+import { Level } from '../level'
 import { selectErrorDetection } from './errorDetection'
 import BitArray from './BitArray'
 import { calculateCharacterCountSize } from './characterCount'

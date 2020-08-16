@@ -1,6 +1,6 @@
 import Mode from '../../mode'
-import { Segment } from '../segment'
 import BitArray from '../../BitArray'
+import { Segment } from '../segment'
 
 const ENCODING_TABLE = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ $%*+-./:'
 

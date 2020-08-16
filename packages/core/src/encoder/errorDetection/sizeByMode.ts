@@ -1,5 +1,5 @@
+import { Level, levels } from '../../level'
 import Mode, { ModeValue } from '../mode'
-import { Level, levels } from '../level'
 
 // prettier-ignore
 export const sizeByMode = {
