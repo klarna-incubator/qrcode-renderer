@@ -1,13 +1,30 @@
 import { logAlpha, antilogAlpha } from '.'
 
+/**
+ * You'll notice that there are exceptions on some of the tests below.
+ * Like, iterating up until 254 instead of 255 for some stuff.
+ * This is because we're transforming between two sets, let's call them:
+ *
+ * 1) The GF(256) set
+ *  This set is the integer set contining every number between 0 and 255 inclusive.
+ *  We're going to use these as the coefficients in our polinomials.
+ *  The 0 value is kinda not used because if a coefficient is zero, it means it doesn't exist.
+ *  That means we can look at this set as being (0,255] in fact.
+ *
+ * 2) The set containing alpha exponents
+ *  This set contains all integers between 1 and 254 inclusive.
+ *  It is defined as being the exponents in the alpha base for numbers in the GF(256) set except 0.
+ *  We'll use these when we want to multiply coefficients, since the product of two exponentials
+ *  in the same base results in the sum of its exponents instead.
+ */
+
 describe('errorCorrection > alpha', () => {
   describe('#logAlpha', () => {
     it('is the inverse of antilogAlpha for GF(256) numbers', () => {
+      // Iterate [0, 254], since antilogAlpha(255) is 1
       for (let i = 0; i < 255; ++i) {
         expect(logAlpha(antilogAlpha(i))).toBe(i)
       }
-      // 255 is not part of the alpha exponentials set
-      expect(logAlpha(antilogAlpha(255))).toBe(0)
     })
 
     it('is an isomorphism over the set that has all possible exponents of alpha bar zero', () => {
@@ -18,7 +35,6 @@ describe('errorCorrection > alpha', () => {
         alphaExponents.add(logAlpha(i))
       }
 
-      // Doesn't include 255
       expect(alphaExponents.size).toBe(255)
       expect(
         Array.from(alphaExponents).every(number => number < 256 && number >= 0)
@@ -42,12 +58,11 @@ describe('errorCorrection > alpha', () => {
     it('is almost an isomorphism over GF(256)', () => {
       const gfNumbers = new Set<number>()
 
+      // antilogAlpha(255) not covered
       for (let i = 0; i < 255; ++i) {
         gfNumbers.add(antilogAlpha(i))
       }
 
-      // Would be an isomorphism if size were 256, almost there!
-      // It so happens both 0 and 255 return 1, and this is expected.
       expect(gfNumbers.size).toBe(255)
       expect(
         Array.from(gfNumbers).every(number => number < 256 && number >= 0)
