@@ -17,6 +17,17 @@ const fromNumberArrayToExponentObject = (coefficients: number[]) => {
   return exponentObject
 }
 
+const removeTrailingZeroes = (coefficients: number[]) => {
+  const lastNonZeroIndex =
+    coefficients.length -
+    coefficients
+      .slice()
+      .reverse()
+      .findIndex(coef => coef !== 0)
+
+  return coefficients.slice(0, lastNonZeroIndex)
+}
+
 const fromExponentObjectToNumberArray = (
   exponents: CoefficientExponentObject
 ) => {
@@ -27,7 +38,7 @@ const fromExponentObjectToNumberArray = (
     coefficients[Number(power)] = antilogAlpha(exponent)
   }
 
-  return coefficients
+  return removeTrailingZeroes(coefficients)
 }
 
 export class Polinomial {
@@ -37,7 +48,7 @@ export class Polinomial {
 
   constructor(coefficients?: number[], exponents?: CoefficientExponentObject) {
     if (coefficients) {
-      this.coefficients = coefficients
+      this.coefficients = removeTrailingZeroes(coefficients)
       this.exponents = fromNumberArrayToExponentObject(coefficients)
     } else if (exponents) {
       this.coefficients = fromExponentObjectToNumberArray(exponents)
@@ -105,9 +116,25 @@ export class Polinomial {
     return polinomials.reduce((acc, curr) => acc.sum(curr))
   }
 
-  divide(target: Polinomial) {
-    // TODO: make division a thing
-    return target
+  modulo(target: Polinomial): Polinomial {
+    const leadPower = this.greaterPower()
+    const targetPower = target.greaterPower()
+    const leadExponent = this.exponents[leadPower]
+    const targetExponent = target.toExponents()[targetPower]
+
+    // That's the point where we can't divide anymore. `this` is the rest.
+    if (leadPower < target.greaterPower()) {
+      return this
+    }
+
+    // sum is the same as subtraction in a GF
+    return this.sum(
+      target.multiply(
+        Polinomial.fromCoefExponents({
+          [leadPower - targetPower]: leadExponent - targetExponent,
+        })
+      )
+    ).modulo(target)
   }
 
   toCoef() {

@@ -20,28 +20,22 @@ export const errorCorrection = (
 
   const blocks = groupCodewordsInBlocks(codewords, { group1, group2 })
 
+  const generator = createGeneratorPolinomial(ecCodewordsPerBlock)
+
   const polies = blocks
     .map(codewords => Polinomial.fromCoef(codewords.slice().reverse()))
     .map(poly =>
-      // We "prepare" the polinomials so they don't become too small during division
-      poly.multiply(Polinomial.fromCoefExponents({ [ecCodewordsPerBlock]: 0 }))
+      // We "prepare" the polinomials so they divide the correct number of times
+      poly.multiply(
+        Polinomial.fromCoefExponents({ [generator.greaterPower()]: 0 })
+      )
     )
 
-  const generator = createGeneratorPolinomial(ecCodewordsPerBlock)
-
   const ecCodewords = polies
-    .map(poly => {
-      console.log({ poly })
-      const offsetGenerator = generator.multiply(
-        Polinomial.fromCoefExponents({
-          // We want the generator to have the same greater power as poly
-          [poly.greaterPower() - generator.greaterPower()]: 0,
-        })
-      )
-
-      return poly.divide(offsetGenerator)
-    })
+    .map(poly => poly.modulo(generator))
     .map(poly => poly.toCoef())
+    // the way the return is expected is from greaterPower -> lesserPower
+    .map(codewords => codewords.reverse())
 
   // REVIEW: possibly we'll want to return the blocks themselves
   return ecCodewords
