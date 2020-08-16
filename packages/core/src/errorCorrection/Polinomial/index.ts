@@ -63,6 +63,13 @@ export class Polinomial {
     return this.coefficients[position]
   }
 
+  /**
+   * Returns the biggest power that has a non-zero coefficient
+   */
+  greaterPower() {
+    return Math.max(...Object.keys(this.coefficients).map(Number))
+  }
+
   map(
     callback: (coefficient: number, index: number, array: number[]) => number
   ) {
