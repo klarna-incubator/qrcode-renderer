@@ -1,4 +1,4 @@
-import { antilogAlpha, logAlpha } from './alpha'
+import { antilogAlpha, logAlpha } from '../alpha'
 
 type CoefficientExponentObject = {
   [power: number]: number
@@ -96,6 +96,11 @@ export class Polinomial {
     )
 
     return polinomials.reduce((acc, curr) => acc.sum(curr))
+  }
+
+  divide(target: Polinomial) {
+    // TODO: make division a thing
+    return target
   }
 
   toCoef() {

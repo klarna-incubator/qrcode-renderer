@@ -1,4 +1,4 @@
-import { Polinomial } from './Polinomial'
+import { Polinomial } from '.'
 
 describe('Polinomial', () => {
   it('multiplies two polinomials', () => {

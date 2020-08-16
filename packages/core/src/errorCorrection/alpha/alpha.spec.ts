@@ -1,4 +1,4 @@
-import { logAlpha, antilogAlpha } from './alpha'
+import { logAlpha, antilogAlpha } from '.'
 
 describe('errorCorrection > alpha', () => {
   describe('#logAlpha', () => {
