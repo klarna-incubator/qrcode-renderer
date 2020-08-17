@@ -1,3 +1,9 @@
+<p align="center">
+  <a href="https://github.com/klarna-incubator/qrcode-renderer">
+      <img src="https://raw.githubusercontent.com/klarna-incubator/qrcode-renderer/main/logo/logo.svg" alt="Logo" width="125" height="125">
+  </a>
+</p>
+
 # QR Code Renderer
 > is a dependency-free library to render QR Codes. The library makes it simple to integrate with any UI framework and comes with a prebuilt SVG renderer for the web.
 
@@ -7,6 +13,23 @@
 
 The library consists of a core package (`@qrcode-renderer/core`) responsible for the encoding of the QR Code. It also provides utilities to integrate the renderer with any UI library.
 This monorepo will also host "bridge" packages (`@qrcode-renderer/<ui-framework>`) for any UI libraries that we choose to natively support.
+
+## Roadmap
+
+- [x] Encode input following the QR Code specs
+- [ ] Apply error correction (Reed-Solomon) algorithm (in progress #2)
+- [ ] Create final binary payload
+- [ ] Generate rendering matrix
+- [ ] Mask data inside matrix
+- [ ] Create rendering function
+
+Renderers:
+- [ ] SVG rendering
+- [ ] React
+- [ ] React Native
+
+Future:
+- [ ] Support Kanji encoding
 
 ## Getting started
 
@@ -18,7 +41,9 @@ TODO
 
 ## Development setup
 
-TODO
+```
+yarn
+```
 
 ## How to contribute
 
@@ -27,6 +52,10 @@ See our guide on [contributing](.github/CONTRIBUTING.md).
 ## Release History
 
 See our [changelog](CHANGELOG.md).
+
+## Acknowledgements
+
+* Thanks to [Tracy (Tan Yun)](https://medium.com/@tanyuntracy) logo ❤️
 
 ## License
 
