@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://github.com/klarna-incubator/qrcode-renderer">
-      <img src="https://raw.githubusercontent.com/klarna-incubator/qrcode-renderer/main/logo/logo.svg" alt="Logo" width="125" height="125">
+      <img src="https://raw.githubusercontent.com/klarna-incubator/qrcode-renderer/main/logo/logo.svg" alt="Logo" width="175" height="175">
   </a>
 </p>
 
