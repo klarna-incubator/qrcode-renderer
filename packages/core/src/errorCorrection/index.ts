@@ -37,6 +37,8 @@ export const errorCorrection = (
     // the way the return is expected is from greaterPower -> lesserPower
     .map(codewords => codewords.reverse())
 
-  // REVIEW: possibly we'll want to return the blocks themselves
-  return ecCodewords
+  return blocks.map((block, index) => ({
+    codewords: block,
+    errorCorrection: ecCodewords[index],
+  }))
 }
