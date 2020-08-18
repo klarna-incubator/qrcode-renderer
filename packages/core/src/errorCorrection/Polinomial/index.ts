@@ -78,7 +78,7 @@ export class Polinomial {
    * Returns the biggest power that has a non-zero coefficient
    */
   greaterPower() {
-    return Math.max(...Object.keys(this.coefficients).map(Number))
+    return this.coefficients.length - 1
   }
 
   map(
