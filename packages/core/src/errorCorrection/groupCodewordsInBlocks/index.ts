@@ -2,27 +2,26 @@ import { GroupDataCodewordsConfig } from '../ecCodewordsPerVersion'
 
 export const groupCodewordsInBlocks = (
   codewords: number[],
-  {
-    group1,
-    group2,
-  }: { group1: GroupDataCodewordsConfig; group2: GroupDataCodewordsConfig }
-) => [
-  ...Array(group1.numberOfDataBlocks)
-    .fill(0)
-    .map((_, index) => {
-      const start = index * group1.dataCodewordsPerBlock
-      const end = start + group1.dataCodewordsPerBlock
+  [headGroup, ...tailGroups]: GroupDataCodewordsConfig[]
+): number[][] => {
+  if (codewords.length === 0) {
+    return []
+  }
 
-      return codewords.slice(start, end)
-    }),
-  ...Array(group2.numberOfDataBlocks)
-    .fill(0)
-    .map((_, index) => {
-      const group1Length =
-        group1.numberOfDataBlocks * group1.dataCodewordsPerBlock
-      const start = group1Length + index * group2.dataCodewordsPerBlock
-      const end = start + group2.dataCodewordsPerBlock
+  const [numberOfDataBlocks, dataCodewordsPerBlock] = headGroup
 
-      return codewords.slice(start, end)
-    }),
-]
+  return [
+    ...Array(numberOfDataBlocks)
+      .fill(0)
+      .map((_, index) => {
+        const start = index * dataCodewordsPerBlock
+        const end = start + dataCodewordsPerBlock
+
+        return codewords.slice(start, end)
+      }),
+    ...groupCodewordsInBlocks(
+      codewords.slice(numberOfDataBlocks * dataCodewordsPerBlock),
+      tailGroups
+    ),
+  ]
+}

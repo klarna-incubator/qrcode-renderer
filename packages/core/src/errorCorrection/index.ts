@@ -10,7 +10,7 @@ export const errorCorrection = (
   level: Level,
   data: string
 ) => {
-  const { ecCodewordsPerBlock, group1, group2 } = ecCodewordsPerVersion[
+  const { ecCodewordsPerBlock, groups } = ecCodewordsPerVersion[
     `${version}${level}`
   ]
 
@@ -18,7 +18,7 @@ export const errorCorrection = (
     parseInt(codeword, 2)
   )
 
-  const blocks = groupCodewordsInBlocks(codewords, { group1, group2 })
+  const blocks = groupCodewordsInBlocks(codewords, groups)
 
   const generator = createGeneratorPolinomial(ecCodewordsPerBlock)
 
