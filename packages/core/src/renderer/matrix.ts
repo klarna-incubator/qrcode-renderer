@@ -56,7 +56,18 @@ export const generateMatrix = (encodingResult: EncodingResult): Matrix => {
 
   // TODO: add alignmentPatterns
 
-  // TODO: add timing patterns
+  // add timing patterns
+  for (let x = 0; x < qrCodeSize; x++) {
+    if (!matrix[x][6]) {
+      matrix[x][6] = x % 2 === 0 ? Pixel.BLACK : Pixel.WHITE
+    }
+  }
+
+  for (let y = 0; y < qrCodeSize; y++) {
+    if (!matrix[6][y]) {
+      matrix[6][y] = y % 2 === 0 ? Pixel.BLACK : Pixel.WHITE
+    }
+  }
 
   // adding dark module
   const [darkModuleX, darkModuleY] = calculateDarkModuleCoordinates(
