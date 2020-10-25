@@ -1,4 +1,4 @@
-import { Coordinates } from './types'
+import { Coordinates, Pattern } from './types'
 import Pixel from './pixel'
 
 const { BLACK, WHITE } = Pixel
@@ -7,7 +7,7 @@ export const FINDER_PATTERN_OUTER_SIZE = 7
 export const FINDER_PATTERN_INNER_WHITE_SIZE = 5
 export const FINDER_PATTERN_INNER_BLACK_SIZE = 3
 
-export const FINDER_PATTERN = [
+export const FINDER_PATTERN: Pattern = [
   [BLACK, BLACK, BLACK, BLACK, BLACK, BLACK, BLACK],
   [BLACK, WHITE, WHITE, WHITE, WHITE, WHITE, BLACK],
   [BLACK, WHITE, BLACK, BLACK, BLACK, WHITE, BLACK],

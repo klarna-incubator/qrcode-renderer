@@ -3,6 +3,8 @@ import { PixelValue } from './pixel'
 
 export type Matrix = PixelValue[][]
 
+export type Pattern = Readonly<Readonly<PixelValue[]>[]>
+
 export type Coordinates<
   X extends number = number,
   Y extends number = number

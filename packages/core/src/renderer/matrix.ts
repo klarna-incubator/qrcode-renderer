@@ -1,14 +1,30 @@
-import { EncodingResult, Matrix } from './types'
+import { EncodingResult, Matrix, Pattern, Coordinates } from './types'
 import {
   calculateFinderPatternCoordinates,
   FINDER_PATTERN_OUTER_SIZE,
   FINDER_PATTERN,
 } from './finderPattern'
+import {
+  ALIGNMENT_PATTERN,
+  calculateAlignmentPatternsCoordinates,
+} from './alignmentPattern'
 import Pixel from './pixel'
 import { calculateDarkModuleCoordinates, DarkModule } from './darkModule'
 
 const calculateQrCodeSize = ({ version }: EncodingResult): number =>
   (version - 1) * 4 + 21
+
+const copyPatternToMatrix = (
+  pattern: Pattern,
+  [x0, y0]: Coordinates,
+  matrix: Matrix
+): void => {
+  for (let x = 0; x < pattern.length; x++) {
+    for (let y = 0; y < pattern[0].length; y++) {
+      matrix[x0 + x][y0 + y] = pattern[x][y]
+    }
+  }
+}
 
 const build2DArray = (size: number) =>
   Array(size)
@@ -23,11 +39,7 @@ export const generateMatrix = (encodingResult: EncodingResult): Matrix => {
 
   for (const coordinates of Object.values(finderPatternCoordinates)) {
     // add Finder pattern
-    for (let x = 0; x < FINDER_PATTERN_OUTER_SIZE; x++) {
-      for (let y = 0; y < FINDER_PATTERN_OUTER_SIZE; y++) {
-        matrix[coordinates[0] + x][coordinates[1] + y] = FINDER_PATTERN[x][y]
-      }
-    }
+    copyPatternToMatrix(FINDER_PATTERN, coordinates, matrix)
 
     // add horizontal separator
     const isHigher = coordinates[1] > FINDER_PATTERN_OUTER_SIZE
@@ -54,7 +66,13 @@ export const generateMatrix = (encodingResult: EncodingResult): Matrix => {
     }
   }
 
-  // TODO: add alignmentPatterns
+  // add alignmentPatterns
+  const alignmentPatternsCoordinates = calculateAlignmentPatternsCoordinates(
+    encodingResult.version
+  )
+  alignmentPatternsCoordinates.forEach(coordinates =>
+    copyPatternToMatrix(ALIGNMENT_PATTERN, coordinates, matrix)
+  )
 
   // add timing patterns
   for (let x = 0; x < qrCodeSize; x++) {
