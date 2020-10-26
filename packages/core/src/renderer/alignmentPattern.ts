@@ -1,4 +1,5 @@
 import Pixel from './pixel'
+import { Pattern, Coordinates } from './types'
 
 const { BLACK, WHITE } = Pixel
 
@@ -6,7 +7,7 @@ export const ALIGNMENT_PATTERN_OUTER_SIZE = 5
 export const ALIGNMENT_PATTERN_INNER_WHITE_SIZE = 3
 export const ALIGNMENT_PATTERN_INNER_BLACK_SIZE = 1
 
-export const ALIGNMENT_PATTERN = [
+export const ALIGNMENT_PATTERN: Pattern = [
   [BLACK, BLACK, BLACK, BLACK, BLACK],
   [BLACK, WHITE, WHITE, WHITE, BLACK],
   [BLACK, WHITE, BLACK, WHITE, BLACK],
@@ -15,6 +16,7 @@ export const ALIGNMENT_PATTERN = [
 ] as const
 
 export const ALIGNMENT_PATTERN_LOCATIONS_TABLE = [
+  [], // version 'zero'
   [],
   [6, 18],
   [6, 22],
@@ -56,3 +58,34 @@ export const ALIGNMENT_PATTERN_LOCATIONS_TABLE = [
   [6, 26, 54, 82, 110, 138, 166],
   [6, 30, 58, 86, 114, 142, 170],
 ]
+
+const cartesianProduct = <T>(...sets: T[][]): T[][] =>
+  sets.reduce<T[][]>((acc, set) => acc.flatMap(x => set.map(y => [...x, y])), [
+    [],
+  ])
+
+const excludeIlegalCoordinates = (
+  locations: number[],
+  coordinates: Coordinates[]
+): Coordinates[] => {
+  const first = locations[0]
+  const last = locations[locations.length - 1]
+  const excludeCoordinates = [
+    [first, first],
+    [first, last],
+    [last, first],
+  ]
+
+  return coordinates.filter(
+    ([x, y]) => !excludeCoordinates.some(([a, b]) => a === x && b === y)
+  )
+}
+
+export const calculateAlignmentPatternsCoordinates = (version: number) => {
+  // Table has pattern centers, subtracting 2 yields top left corners
+  const locations = ALIGNMENT_PATTERN_LOCATIONS_TABLE[version].map(x => x - 2)
+
+  const allCoordinates = cartesianProduct(locations, locations) as Coordinates[]
+
+  return excludeIlegalCoordinates(locations, allCoordinates)
+}
