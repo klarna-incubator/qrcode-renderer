@@ -75,13 +75,13 @@ export const addAlignmentPattern = (version: number, matrix: Matrix) => {
   )
 
   for (const [originX, originY] of alignmentPatternsCoordinates) {
-    if (matrix[originX + 2][originY + 2] !== Pixel.EMPTY) {
+    if (matrix[originY + 2][originX + 2] !== Pixel.EMPTY) {
       continue
     }
 
     for (let x = 0; x < ALIGNMENT_PATTERN_OUTER_SIZE; ++x) {
       for (let y = 0; y < ALIGNMENT_PATTERN_OUTER_SIZE; ++y) {
-        matrix[originX + x][originY + y] = ALIGNMENT_PATTERN[x][y]
+        matrix[originY + y][originX + x] = ALIGNMENT_PATTERN[y][x]
       }
     }
   }
