@@ -19,10 +19,10 @@ const goToNextColumn = (x: number) => {
 }
 
 const getNextPosition = (
-  matrix: Matrix,
+  size: number,
   position: { x: number; y: number; direction: Direction }
 ) => {
-  const distanceToRight = matrix.length - 1 - position.x
+  const distanceToRight = size - 1 - position.x
   const shouldGoLeft =
     position.x > TIMING_FIXED_POSITION
       ? distanceToRight % 2 === 0
@@ -53,7 +53,7 @@ const getNextPosition = (
       }
     }
   } else {
-    const shouldTurnAround = position.y === matrix.length - 1
+    const shouldTurnAround = position.y === size - 1
 
     if (shouldTurnAround) {
       return {
@@ -71,23 +71,29 @@ const getNextPosition = (
   }
 }
 
-const isLastPosition = (matrix: Matrix, position: { x: number; y: number }) =>
-  position.x === 0 && position.y === matrix.length - 1
+const isLastPosition = (size: number, position: { x: number; y: number }) =>
+  position.x === 0 && position.y === size - 1
 
-export const addDataBits = (data: Uint8Array, matrix: Matrix) => {
+export const addDataBits = (
+  data: Uint8Array,
+  fixedMatrix: Matrix,
+  dataMatrix: Matrix
+) => {
+  const size = fixedMatrix.length
+
   let position = {
-    x: matrix.length - 1,
-    y: matrix.length - 1,
+    x: size - 1,
+    y: size - 1,
     direction: direction.UP as Direction,
   }
   let dataIndex = 0
 
   do {
-    if (matrix[position.y][position.x] === Pixel.EMPTY) {
-      matrix[position.y][position.x] = data[dataIndex] as PixelValue
+    if (fixedMatrix[position.y][position.x] === Pixel.EMPTY) {
+      dataMatrix[position.y][position.x] = data[dataIndex] as PixelValue
       dataIndex = dataIndex + 1
     }
 
-    position = getNextPosition(matrix, position)
-  } while (!isLastPosition(matrix, position))
+    position = getNextPosition(size, position)
+  } while (!isLastPosition(size, position))
 }

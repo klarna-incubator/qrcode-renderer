@@ -15,18 +15,33 @@ const build2DArray = <T>(size: number, initial: T) =>
     .fill(null)
     .map(() => Array<T>(size).fill(initial))
 
+const applyMatrix = (target: Matrix, source: Matrix) => {
+  for (let x = 0; x < source.length; ++x) {
+    for (let y = 0; y < source.length; ++y) {
+      if (source[y][x] !== Pixel.EMPTY) {
+        target[y][x] = source[y][x]
+      }
+    }
+  }
+}
+
 export const generateMatrix = (encodingResult: EncodingResult): Matrix => {
   const qrCodeSize = calculateQrCodeSize(encodingResult)
 
-  const matrix = build2DArray<PixelValue>(qrCodeSize, Pixel.EMPTY)
+  const fixedMatrix = build2DArray<PixelValue>(qrCodeSize, Pixel.EMPTY)
+  // we want a separate matrix to store the data, so we can mask it afterwards
+  const dataMatrix = build2DArray<PixelValue>(qrCodeSize, Pixel.EMPTY)
 
-  addFinderPattern(matrix)
-  addAlignmentPattern(encodingResult.version, matrix)
-  addTimingPattern(matrix)
-  addFormatInformationAreaPattern(encodingResult.version, matrix)
-  addVersionInformationArea(encodingResult.version, matrix)
+  addFinderPattern(fixedMatrix)
+  addAlignmentPattern(encodingResult.version, fixedMatrix)
+  addTimingPattern(fixedMatrix)
+  addFormatInformationAreaPattern(encodingResult.version, fixedMatrix)
+  addVersionInformationArea(encodingResult.version, fixedMatrix)
 
-  addDataBits(encodingResult.data, matrix)
+  // This will only mutate the dataMatrix
+  addDataBits(encodingResult.data, fixedMatrix, dataMatrix)
 
-  return matrix
+  applyMatrix(dataMatrix, fixedMatrix)
+
+  return dataMatrix
 }
