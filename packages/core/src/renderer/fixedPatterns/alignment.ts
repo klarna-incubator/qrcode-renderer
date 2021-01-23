@@ -1,13 +1,11 @@
-import Pixel from './pixel'
-import { Pattern, Coordinates } from './types'
+import Pixel from '../pixel'
+import { Pattern, Matrix } from '../types'
 
 const { BLACK, WHITE } = Pixel
 
-export const ALIGNMENT_PATTERN_OUTER_SIZE = 5
-export const ALIGNMENT_PATTERN_INNER_WHITE_SIZE = 3
-export const ALIGNMENT_PATTERN_INNER_BLACK_SIZE = 1
+const ALIGNMENT_PATTERN_OUTER_SIZE = 5
 
-export const ALIGNMENT_PATTERN: Pattern = [
+const ALIGNMENT_PATTERN: Pattern = [
   [BLACK, BLACK, BLACK, BLACK, BLACK],
   [BLACK, WHITE, WHITE, WHITE, BLACK],
   [BLACK, WHITE, BLACK, WHITE, BLACK],
@@ -15,7 +13,7 @@ export const ALIGNMENT_PATTERN: Pattern = [
   [BLACK, BLACK, BLACK, BLACK, BLACK],
 ] as const
 
-export const ALIGNMENT_PATTERN_LOCATIONS_TABLE = [
+const ALIGNMENT_PATTERN_LOCATIONS_TABLE = [
   [], // version 'zero'
   [],
   [6, 18],
@@ -64,28 +62,27 @@ const cartesianProduct = <T>(...sets: T[][]): T[][] =>
     [],
   ])
 
-const excludeIlegalCoordinates = (
-  locations: number[],
-  coordinates: Coordinates[]
-): Coordinates[] => {
-  const first = locations[0]
-  const last = locations[locations.length - 1]
-  const excludeCoordinates = [
-    [first, first],
-    [first, last],
-    [last, first],
-  ]
-
-  return coordinates.filter(
-    ([x, y]) => !excludeCoordinates.some(([a, b]) => a === x && b === y)
-  )
-}
-
 export const calculateAlignmentPatternsCoordinates = (version: number) => {
   // Table has pattern centers, subtracting 2 yields top left corners
   const locations = ALIGNMENT_PATTERN_LOCATIONS_TABLE[version].map(x => x - 2)
 
-  const allCoordinates = cartesianProduct(locations, locations) as Coordinates[]
+  return cartesianProduct(locations, locations)
+}
 
-  return excludeIlegalCoordinates(locations, allCoordinates)
+export const addAlignmentPattern = (version: number, matrix: Matrix) => {
+  const alignmentPatternsCoordinates = calculateAlignmentPatternsCoordinates(
+    version
+  )
+
+  for (const [originX, originY] of alignmentPatternsCoordinates) {
+    if (matrix[originX + 2][originY + 2] !== Pixel.EMPTY) {
+      continue
+    }
+
+    for (let x = 0; x < ALIGNMENT_PATTERN_OUTER_SIZE; ++x) {
+      for (let y = 0; y < ALIGNMENT_PATTERN_OUTER_SIZE; ++y) {
+        matrix[originX + x][originY + y] = ALIGNMENT_PATTERN[x][y]
+      }
+    }
+  }
 }
