@@ -19,7 +19,7 @@ export const createEndPadding = (
   let totalSize = size
 
   const requiredNumberOfBits =
-    dataCodewords.slice(version - 1, version - 1 + 4)[levels.indexOf(level)] *
+    dataCodewords.slice((version - 1) * 4, version * 4)[levels.indexOf(level)] *
     BYTE
 
   const sizeOfTerminator = Math.min(4, requiredNumberOfBits - totalSize)
