@@ -1,3 +1,4 @@
+import BitArray from './BitArray'
 import encode from './index'
 import Mode from './mode'
 
@@ -12,7 +13,7 @@ describe('encoder', () => {
         version: 1,
         level: 'H',
         mode: Mode.NUMERIC,
-        data: Uint8Array.from(encodedInput.split('').map(Number)),
+        data: BitArray.fromString(encodedInput).toUintArray(),
       }
 
       expect(encode(input)).toEqual(expected)
@@ -29,7 +30,22 @@ describe('encoder', () => {
         version: 1,
         level: 'H',
         mode: Mode.ALPHANUMERIC,
-        data: Uint8Array.from(encodedInput.split('').map(Number)),
+        data: BitArray.fromString(encodedInput).toUintArray(),
+      }
+
+      expect(encode(input)).toEqual(expected)
+    })
+
+    it('encodes correctly a real life link', () => {
+      const input = 'https://github.com/klarna-incubator/qrcode-renderer'.toUpperCase()
+      const encodedInput =
+        '0010000110011011000110101010011001010100011000111101110100101110001010100101010101010100011110110111010001001110111101000110111011101110011010110001111010110110100000101000111010001111110011010011000110011101010100101011010100011010001001010111111010100000101000110101001010111100110011010110110000000000111011000001000111101100000100011110110000010001'
+
+      const expected = {
+        version: 3,
+        level: 'M',
+        mode: Mode.ALPHANUMERIC,
+        data: BitArray.fromString(encodedInput).toUintArray(),
       }
 
       expect(encode(input)).toEqual(expected)
@@ -46,7 +62,7 @@ describe('encoder', () => {
         version: 1,
         level: 'L',
         mode: Mode.BYTE,
-        data: Uint8Array.from(encodedInput.split('').map(Number)),
+        data: BitArray.fromString(encodedInput).toUintArray(),
       }
 
       expect(encode(input)).toEqual(expected)

@@ -17,6 +17,12 @@ export default class BitArray {
     return this.toString().length
   }
 
+  static fromString(str: string) {
+    const bitArray = new BitArray()
+    bitArray.push(str)
+    return bitArray
+  }
+
   public toString() {
     return this.buffer.join('')
   }
