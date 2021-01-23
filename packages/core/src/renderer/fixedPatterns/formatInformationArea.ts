@@ -1,9 +1,7 @@
+import { range } from '../range'
 import Pixel from '../pixel'
 import { Matrix } from '../types'
 import { FINDER_PATTERN_OUTER_SIZE } from './finder'
-
-const range = (start: number, size: number) =>
-  new Array(size).fill(start).map((num, position) => num + position)
 
 const getInformationAreaCoordinates = (qrCodeSize: number) => {
   return [

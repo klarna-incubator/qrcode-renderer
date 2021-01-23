@@ -4,6 +4,7 @@ import { addTimingPattern } from './fixedPatterns/timing'
 import { addFinderPattern } from './fixedPatterns/finder'
 import { addAlignmentPattern } from './fixedPatterns/alignment'
 import { addFormatInformationAreaPattern } from './fixedPatterns/formatInformationArea'
+import { addVersionInformationArea } from './fixedPatterns/versionInformationArea'
 
 const calculateQrCodeSize = ({ version }: EncodingResult): number =>
   (version - 1) * 4 + 21
@@ -22,8 +23,7 @@ export const generateMatrix = (encodingResult: EncodingResult): Matrix => {
   addAlignmentPattern(encodingResult.version, matrix)
   addTimingPattern(matrix)
   addFormatInformationAreaPattern(encodingResult.version, matrix)
-
-  // TODO: reserve version information area
+  addVersionInformationArea(encodingResult.version, matrix)
   // TODO: place the data bits
 
   return matrix
