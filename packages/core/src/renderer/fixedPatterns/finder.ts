@@ -28,7 +28,7 @@ export const addFinderPattern = (matrix: Matrix) => {
   for (const [originX, originY] of Object.values(finderPatternCoordinates)) {
     for (let x = 0; x < FINDER_PATTERN_OUTER_SIZE; x++) {
       for (let y = 0; y < FINDER_PATTERN_OUTER_SIZE; y++) {
-        matrix[originX + x][originY + y] = FINDER_PATTERN[x][y]
+        matrix[originY + y][originX + x] = FINDER_PATTERN[y][x]
       }
     }
 
@@ -37,7 +37,7 @@ export const addFinderPattern = (matrix: Matrix) => {
       y: originY === 0 ? FINDER_PATTERN_OUTER_SIZE : originY - 1,
     }
     for (let x = 0; x < FINDER_PATTERN_OUTER_SIZE + 1; ++x) {
-      matrix[horizontalSeparatorOrigin.x + x][horizontalSeparatorOrigin.y] =
+      matrix[horizontalSeparatorOrigin.y][horizontalSeparatorOrigin.x + x] =
         Pixel.WHITE
     }
 
@@ -46,7 +46,7 @@ export const addFinderPattern = (matrix: Matrix) => {
       y: originY === 0 ? 0 : originY - 1,
     }
     for (let y = 0; y < FINDER_PATTERN_OUTER_SIZE + 1; ++y) {
-      matrix[verticalSeparatorOrigin.x][verticalSeparatorOrigin.y + y] =
+      matrix[verticalSeparatorOrigin.y + y][verticalSeparatorOrigin.x] =
         Pixel.WHITE
     }
   }
