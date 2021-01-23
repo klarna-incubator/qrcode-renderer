@@ -1,9 +1,9 @@
 import { EncodingResult, Matrix } from './types'
 import Pixel, { PixelValue } from './pixel'
-import { calculateDarkModuleCoordinates, DarkModule } from './darkModule'
 import { addTimingPattern } from './fixedPatterns/timing'
 import { addFinderPattern } from './fixedPatterns/finder'
 import { addAlignmentPattern } from './fixedPatterns/alignment'
+import { addFormatInformationAreaPattern } from './fixedPatterns/formatInformationArea'
 
 const calculateQrCodeSize = ({ version }: EncodingResult): number =>
   (version - 1) * 4 + 21
@@ -21,12 +21,7 @@ export const generateMatrix = (encodingResult: EncodingResult): Matrix => {
   addFinderPattern(matrix)
   addAlignmentPattern(encodingResult.version, matrix)
   addTimingPattern(matrix)
-
-  // adding dark module
-  const [darkModuleX, darkModuleY] = calculateDarkModuleCoordinates(
-    encodingResult
-  )
-  matrix[darkModuleX][darkModuleY] = DarkModule
+  addFormatInformationAreaPattern(encodingResult.version, matrix)
 
   // TODO: reserve version information area
   // TODO: place the data bits
