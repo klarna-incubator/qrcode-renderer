@@ -1,8 +1,6 @@
 import { EncodingResult } from '../types'
 
 export const simpleString: EncodingResult = {
-  input: 'qrcode-renderer',
-  binary: 0b01000001000001110001011100100010110101100011011011110110010001100101001011010111001001100101011011100110010001100101011100100110010101110010000011101100,
   version: 1,
   level: 'L',
   data: Uint8Array.from([

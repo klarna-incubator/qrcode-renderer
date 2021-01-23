@@ -1,4 +1,4 @@
-import { Level } from 'encoder/errorDetection'
+import { Level } from '../level'
 import { PixelValue } from './pixel'
 
 export type Matrix = PixelValue[][]
@@ -11,8 +11,6 @@ export type Coordinates<
 > = [X, Y]
 
 export interface EncodingResult {
-  input: string
-  binary: number
   data: Uint8Array
   version: number
   level: Level
