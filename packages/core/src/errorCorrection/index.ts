@@ -8,15 +8,13 @@ import { splitIntoCodewords } from './splitIntoCodewords'
 export const errorCorrection = (
   version: number,
   level: Level,
-  data: string
+  data: Uint8Array
 ) => {
   const { ecCodewordsPerBlock, groups } = ecCodewordsPerVersion[
     `${version}${level}`
   ]
 
-  const codewords = splitIntoCodewords(data).map(codeword =>
-    parseInt(codeword, 2)
-  )
+  const codewords = splitIntoCodewords(data)
 
   const blocks = groupCodewordsInBlocks(codewords, groups)
 
