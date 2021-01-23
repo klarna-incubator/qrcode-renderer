@@ -5,7 +5,11 @@ export const addTimingPattern = (matrix: Matrix) => {
   for (let position = 0; position < matrix.length; position++) {
     const color = position % 2 === 0 ? Pixel.BLACK : Pixel.WHITE
 
-    matrix[position][6] = color
-    matrix[6][position] = color
+    if (matrix[position][6] === Pixel.EMPTY) {
+      matrix[position][6] = color
+    }
+    if (matrix[6][position] === Pixel.EMPTY) {
+      matrix[6][position] = color
+    }
   }
 }

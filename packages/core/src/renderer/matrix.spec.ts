@@ -1,6 +1,9 @@
 import { generateMatrix } from './matrix'
 import { simpleString } from './fixtures'
-import { FINDER_PATTERN, FINDER_PATTERN_OUTER_SIZE } from './finderPattern'
+import {
+  FINDER_PATTERN,
+  FINDER_PATTERN_OUTER_SIZE,
+} from './fixedPatterns/finder'
 import { Matrix } from './types'
 
 const asciiRender = (matrix: Matrix) => {
