@@ -4,6 +4,17 @@ import BitArray from '../../BitArray'
 
 export const canEncode = (input: string) => /^[0-9]+$/.test(input)
 
+const groupLength = (group: string) => {
+  switch (group.length) {
+    case 3:
+      return 10
+    case 2:
+      return 7
+    default:
+      return 4
+  }
+}
+
 export const encode = (input: string): Segment => {
   const numberOfGroups = Math.ceil(input.length / 3)
   const groups = Array(numberOfGroups)
@@ -25,16 +36,5 @@ export const encode = (input: string): Segment => {
     mode: Mode.NUMERIC,
     dataSize: input.length,
     data: bitArray.toString(),
-  }
-}
-
-const groupLength = (group: string) => {
-  switch (group.length) {
-    case 3:
-      return 10
-    case 2:
-      return 7
-    default:
-      return 4
   }
 }

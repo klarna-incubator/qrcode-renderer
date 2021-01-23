@@ -1,28 +1,7 @@
 import { ModeValue } from '../mode'
-import { Level, levels } from '../level'
+import { Level, levels } from '../../level'
 import { ensure } from '../ensure'
 import { getVersionSizes, getSize } from './sizeByMode'
-
-export const selectErrorDetection = (
-  mode: ModeValue,
-  minimumVersion: number | undefined,
-  level: Level | undefined,
-  dataSize: number
-) => {
-  if (minimumVersion && (minimumVersion < 1 || minimumVersion > 40)) {
-    throw new Error('Invalid QR Code version provided')
-  }
-
-  const targetVersion = findVersion(mode, level, dataSize, minimumVersion)
-  const targetLevel = level ?? findLevel(mode, targetVersion, dataSize)
-  const size = getSize(mode, targetVersion, targetLevel)
-
-  return {
-    version: targetVersion,
-    level: targetLevel,
-    size,
-  }
-}
 
 const findVersion = (
   mode: ModeValue,
@@ -64,4 +43,25 @@ const findLevel = (mode: ModeValue, version: number, dataSize: number) => {
   )
 
   return levels[versionSizes.indexOf(size)]
+}
+
+export const selectErrorDetection = (
+  mode: ModeValue,
+  minimumVersion: number | undefined,
+  level: Level | undefined,
+  dataSize: number
+) => {
+  if (minimumVersion && (minimumVersion < 1 || minimumVersion > 40)) {
+    throw new Error('Invalid QR Code version provided')
+  }
+
+  const targetVersion = findVersion(mode, level, dataSize, minimumVersion)
+  const targetLevel = level ?? findLevel(mode, targetVersion, dataSize)
+  const size = getSize(mode, targetVersion, targetLevel)
+
+  return {
+    version: targetVersion,
+    level: targetLevel,
+    size,
+  }
 }

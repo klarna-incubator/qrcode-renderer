@@ -1,6 +1,6 @@
 import Mode from '../../mode'
-import { Segment } from '../segment'
 import BitArray from '../../BitArray'
+import { Segment } from '../segment'
 import TextEncoder from 'encoder/encodingFunctions/byte/TextEncoder' // path defined in tsconfig to support both node.js and browsers
 
 export const canEncode = (_input: string) => true
