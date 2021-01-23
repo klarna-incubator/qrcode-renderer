@@ -33,7 +33,7 @@
   "repository": "https://github.com/klarna-incubator/qrcode-renderer",
   "module": "dist/core-1.esm.js",
   "devDependencies": {
-    "husky": "^4.2.5",
+    "husky": "^5.0.0",
     "tsdx": "^0.14.0",
     "tslib": "^2.0.1",
     "typescript": "^3.9.7"
