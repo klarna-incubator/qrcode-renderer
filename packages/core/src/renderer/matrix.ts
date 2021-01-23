@@ -8,8 +8,9 @@ import {
   ALIGNMENT_PATTERN,
   calculateAlignmentPatternsCoordinates,
 } from './alignmentPattern'
-import Pixel from './pixel'
+import Pixel, { PixelValue } from './pixel'
 import { calculateDarkModuleCoordinates, DarkModule } from './darkModule'
+import { addTimingPattern } from './fixedPatterns/timing'
 
 const calculateQrCodeSize = ({ version }: EncodingResult): number =>
   (version - 1) * 4 + 21
@@ -26,16 +27,17 @@ const copyPatternToMatrix = (
   }
 }
 
-const build2DArray = (size: number) =>
+const build2DArray = <T>(size: number, initial: T) =>
   Array(size)
     .fill(null)
-    .map(() => Array(size).fill(null))
+    .map(() => Array<T>(size).fill(initial))
 
 export const generateMatrix = (encodingResult: EncodingResult): Matrix => {
   const qrCodeSize = calculateQrCodeSize(encodingResult)
   const finderPatternCoordinates = calculateFinderPatternCoordinates(qrCodeSize)
 
-  const matrix: Matrix = build2DArray(qrCodeSize)
+  const matrix = build2DArray<PixelValue>(qrCodeSize, Pixel.EMPTY)
+  addTimingPattern(matrix)
 
   for (const coordinates of Object.values(finderPatternCoordinates)) {
     // add Finder pattern
@@ -73,19 +75,6 @@ export const generateMatrix = (encodingResult: EncodingResult): Matrix => {
   alignmentPatternsCoordinates.forEach(coordinates =>
     copyPatternToMatrix(ALIGNMENT_PATTERN, coordinates, matrix)
   )
-
-  // add timing patterns
-  for (let x = 0; x < qrCodeSize; x++) {
-    if (!matrix[x][6]) {
-      matrix[x][6] = x % 2 === 0 ? Pixel.BLACK : Pixel.WHITE
-    }
-  }
-
-  for (let y = 0; y < qrCodeSize; y++) {
-    if (!matrix[6][y]) {
-      matrix[6][y] = y % 2 === 0 ? Pixel.BLACK : Pixel.WHITE
-    }
-  }
 
   // adding dark module
   const [darkModuleX, darkModuleY] = calculateDarkModuleCoordinates(
