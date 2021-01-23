@@ -91,6 +91,10 @@ export const addDataBits = (
   do {
     if (fixedMatrix[position.y][position.x] === Pixel.EMPTY) {
       dataMatrix[position.y][position.x] = data[dataIndex] as PixelValue
+      // COMBAK: I'm not sure why, but in some cases, the data buffer ends prematurely
+      if (data[dataIndex] === undefined) {
+        dataMatrix[position.y][position.x] = Pixel.WHITE
+      }
       dataIndex = dataIndex + 1
     }
 
