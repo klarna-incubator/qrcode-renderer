@@ -1,3 +1,4 @@
+import { wrapWithQuietZone } from '../fixedPatterns/quietZone'
 import { Matrix } from '../types'
 import { penalizeConsecutivesInRow } from './rules/consecutives'
 import { penalizePatternInRow } from './rules/pattern'
@@ -24,8 +25,6 @@ const penalize = (maskedMatrix: Matrix) => {
 
   baIP += penalizeRatioOfColors(maskedMatrix)
 
-  // console.log({ runP, boxP, findP, penalty })
-
   return runP + findP + boxP + baIP
 }
 
@@ -33,7 +32,7 @@ export const decideBestMask = (maskedMatrices: Matrix[]) => {
   const penalties = maskedMatrices.map(penalize)
   const lesserPenalty = Math.max(...penalties)
 
-  return maskedMatrices[
-    penalties.findIndex(penalty => lesserPenalty === penalty)
-  ]
+  return wrapWithQuietZone(
+    maskedMatrices[penalties.findIndex(penalty => lesserPenalty === penalty)]
+  )
 }

@@ -1,5 +1,4 @@
 import { Level } from '../../level'
-import { wrapWithQuietZone } from '../fixedPatterns/quietZone'
 import { addVersionBits, createVersionBits } from '../dataPatterns/versionBits'
 import { addFormatBits, createFormatBits } from '../dataPatterns/formatBits'
 import { buildMatrix, applyMatrix } from '../matrix'
@@ -35,7 +34,7 @@ const maskMatrix = (
   addFormatBits(formatBits, maskedMatrix)
   addVersionBits(versionBits, maskedMatrix)
 
-  return wrapWithQuietZone(maskedMatrix)
+  return maskedMatrix
 }
 
 export const createMaskedMatrices = (
@@ -44,8 +43,7 @@ export const createMaskedMatrices = (
   fixedMatrix: Matrix,
   dataMatrix: Matrix
 ) => {
-  // COMBAK: adjust back to 8
-  return Array(1)
+  return Array(8)
     .fill(0)
     .map((_zero, index) => {
       const formatBits = createFormatBits(level, index)

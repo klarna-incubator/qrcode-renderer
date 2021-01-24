@@ -23,7 +23,7 @@ export const mask = (
     case 1:
       return mask(position.y % 2 === 0)
     case 2:
-      return mask(position.x % 2 === 0)
+      return mask(position.x % 3 === 0)
     case 3:
       return mask((position.x + position.y) % 3 === 0)
     case 4:

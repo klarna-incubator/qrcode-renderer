@@ -2,17 +2,43 @@ import Pixel, { PixelValue } from '../../pixel'
 
 const { BLACK, WHITE } = Pixel
 
-// This, followed or preceded by four whites is what we're looking for
-const pattern = [BLACK, WHITE, BLACK, BLACK, BLACK, WHITE, BLACK].join('')
-const fourWhites = [WHITE, WHITE, WHITE, WHITE].join('')
+// This, followed or preceded by three whites is what we're looking for
+const pattern = [
+  WHITE,
+  BLACK,
+  WHITE,
+  BLACK,
+  BLACK,
+  BLACK,
+  WHITE,
+  BLACK,
+  WHITE,
+].join('')
+const threeWhites = [WHITE, WHITE, WHITE].join('')
 
 export const penalizePatternInRow = (row: PixelValue[]) => {
-  const occurrences = row.reduce<number>((num, _char, index) => {
-    const fromThisPoint = row.slice(index).join('')
+  const rowWithPadding = [
+    WHITE,
+    WHITE,
+    WHITE,
+    WHITE,
+    ...row,
+    WHITE,
+    WHITE,
+    WHITE,
+    WHITE,
+  ]
 
-    num += fromThisPoint.startsWith(fourWhites + pattern) ? 1 : 0
+  const occurrences = rowWithPadding.reduce<number>((num, _char, index) => {
+    const fromThisPoint = rowWithPadding.slice(index).join('')
 
-    num += fromThisPoint.startsWith(pattern + fourWhites) ? 1 : 0
+    if (fromThisPoint.startsWith(threeWhites + pattern)) {
+      num += 1
+    }
+
+    if (fromThisPoint.startsWith(pattern + threeWhites)) {
+      num += 1
+    }
 
     return num
   }, 0)

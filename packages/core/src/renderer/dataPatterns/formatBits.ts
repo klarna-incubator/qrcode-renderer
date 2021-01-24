@@ -69,7 +69,7 @@ export const addFormatBits = (formatBits: number[], matrix: Matrix) => {
   formatBits.forEach((bit, index) => {
     const pixel = bit === 0 ? Pixel.WHITE : Pixel.BLACK
 
-    if (index < 5) {
+    if (index < 6) {
       matrix[FINDER_PATTERN_OUTER_SIZE + 1][index] = pixel
       matrix[matrix.length - 1 - index][FINDER_PATTERN_OUTER_SIZE + 1] = pixel
     }
