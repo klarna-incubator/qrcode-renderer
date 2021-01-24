@@ -5,6 +5,7 @@
 </p>
 
 # QR Code Renderer
+
 > is a dependency-free library to render QR Codes. The library makes it simple to integrate with any UI framework and comes with a prebuilt SVG renderer for the web.
 
 [![Build Status][ci-image]][ci-url]
@@ -17,18 +18,20 @@ This monorepo will also host "bridge" packages (`@qrcode-renderer/<ui-framework>
 ## Roadmap
 
 - [x] Encode input following the QR Code specs
-- [ ] Apply error correction (Reed-Solomon) algorithm (in progress #2)
-- [ ] Create final binary payload
-- [ ] Generate rendering matrix
-- [ ] Mask data inside matrix
-- [ ] Create rendering function
+- [x] Apply error correction (Reed-Solomon) algorithm
+- [x] Create final binary payload
+- [x] Generate rendering matrix
+- [x] Mask data inside matrix
+- [x] Create rendering function
 
 Renderers:
+
 - [ ] SVG rendering
 - [ ] React
 - [ ] React Native
 
 Future:
+
 - [ ] Support Kanji encoding
 
 ## Getting started
@@ -41,7 +44,7 @@ TODO
 
 ## Development setup
 
-```
+```bash
 yarn
 ```
 
@@ -55,7 +58,7 @@ See our [changelog](CHANGELOG.md).
 
 ## Acknowledgements
 
-* Thanks to [Tracy (Tan Yun)](https://medium.com/@tanyuntracy) logo ❤️
+- Thanks to [Tracy (Tan Yun)](https://medium.com/@tanyuntracy) logo ❤️
 
 ## License
 
@@ -64,7 +67,7 @@ Copyright © 2020 Klarna Bank AB
 For license details, see the [LICENSE](LICENSE) file in the root of this project.
 
 The word "QR Code" is registered trademark of DENSO WAVE INCORPORATED
-http://www.denso-wave.com/qrcode/faqpatent-e.html
+<http://www.denso-wave.com/qrcode/faqpatent-e.html>
 
 <!-- Markdown link & img dfn's -->
 [ci-image]: https://github.com/klarna-incubator/qrcode-renderer/workflows/CI/badge.svg
