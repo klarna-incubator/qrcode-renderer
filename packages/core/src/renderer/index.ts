@@ -29,7 +29,11 @@ export const renderModules = (encodingResult: EncodingResult): Matrix => {
   // This will only mutate the dataMatrix
   addDataBits(encodingResult.data, fixedMatrix, dataMatrix)
 
-  const maskedMatrices = createMaskedMatrices(fixedMatrix, dataMatrix)
+  const maskedMatrices = createMaskedMatrices(
+    encodingResult.level,
+    fixedMatrix,
+    dataMatrix
+  )
   const bestMask = decideBestMask(maskedMatrices)
 
   // add format and version information

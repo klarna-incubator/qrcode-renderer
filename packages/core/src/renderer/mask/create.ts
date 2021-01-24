@@ -1,3 +1,5 @@
+import { Level } from '../../level'
+import { addFormatBits, createFormatBits } from '../formatBits'
 import { buildMatrix, applyMatrix } from '../matrix'
 import Pixel, { PixelValue } from '../pixel'
 import { Matrix } from '../types'
@@ -11,7 +13,8 @@ type MaskingFunction = (
 const maskMatrix = (
   fixed: Matrix,
   data: Matrix,
-  maskingFunction: MaskingFunction
+  maskingFunction: MaskingFunction,
+  formatBits: number[]
 ) => {
   const maskedMatrix = buildMatrix<PixelValue>(fixed.length, Pixel.EMPTY)
 
@@ -26,11 +29,13 @@ const maskMatrix = (
   }
 
   applyMatrix(maskedMatrix, fixed)
+  addFormatBits(formatBits, maskedMatrix)
 
   return maskedMatrix
 }
 
 export const createMaskedMatrices = (
+  level: Level,
   fixedMatrix: Matrix,
   dataMatrix: Matrix
 ) => {
@@ -38,9 +43,11 @@ export const createMaskedMatrices = (
   return Array(1)
     .fill(0)
     .map((_zero, index) => {
+      const formatBits = createFormatBits(level, index)
+
       const maskingFunction: MaskingFunction = (position, pixel) =>
         mask(index, position, pixel)
 
-      return maskMatrix(fixedMatrix, dataMatrix, maskingFunction)
+      return maskMatrix(fixedMatrix, dataMatrix, maskingFunction, formatBits)
     })
 }
