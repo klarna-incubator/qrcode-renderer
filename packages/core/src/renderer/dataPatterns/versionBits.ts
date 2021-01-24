@@ -4,16 +4,7 @@ import Pixel from '../pixel'
 import { Matrix } from '../types'
 
 // a12 + a11 + a10 + a9 + a8 + a5 + a2 + 1
-const generatorPolinomialCoefs = {
-  12: 1,
-  11: 1,
-  10: 1,
-  9: 1,
-  8: 1,
-  5: 1,
-  2: 1,
-  0: 1,
-}
+const generatorPolinomialCoefs = [1, 0, 1, 0, 0, 1, 0, 0, 1, 1, 1, 1, 1]
 
 const ensureLength = (length: number, bitArray: number[]) =>
   bitArray
@@ -33,7 +24,7 @@ export const createVersionBits = (version: number) => {
     .split('')
     .map(Number)
 
-  const generator = Polinomial.fromCoefExponents(generatorPolinomialCoefs)
+  const generator = Polinomial.fromCoef(generatorPolinomialCoefs)
 
   const versionPoly = Polinomial.fromCoef(
     versionBits.slice().reverse()

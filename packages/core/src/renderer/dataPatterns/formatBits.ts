@@ -20,15 +20,7 @@ const getLevelBits = (level: Level) => {
 const getMaskBits = (mask: number) => mask.toString(2).padStart(3, '0')
 
 // Equivalent to a10 + a8 + a5 + a4 + a2 + a + 1
-const generatorPolinomialCoefs = {
-  10: 1,
-  8: 1,
-  5: 1,
-  4: 1,
-  2: 1,
-  1: 1,
-  0: 1,
-}
+const generatorPolinomialCoefs = [1, 1, 1, 0, 1, 1, 0, 0, 1, 0, 1]
 
 // We need to XOR with this as the last step
 const maskString = [1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0]
@@ -45,7 +37,7 @@ export const createFormatBits = (level: Level, mask: number) => {
   const maskBits = getMaskBits(mask)
 
   const formatBits = (levelBits + maskBits).split('').map(Number)
-  const generator = Polinomial.fromCoefExponents(generatorPolinomialCoefs)
+  const generator = Polinomial.fromCoef(generatorPolinomialCoefs)
 
   // Here we multiply so that we divide with the generator the correct amount of times
   const formatPoly = Polinomial.fromCoef(formatBits.slice().reverse()).multiply(
