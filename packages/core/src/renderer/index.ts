@@ -31,6 +31,7 @@ export const renderModules = (encodingResult: EncodingResult): Matrix => {
 
   const maskedMatrices = createMaskedMatrices(
     encodingResult.level,
+    encodingResult.version,
     fixedMatrix,
     dataMatrix
   )

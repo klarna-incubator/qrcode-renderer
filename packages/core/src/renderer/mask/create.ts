@@ -1,4 +1,5 @@
 import { Level } from '../../level'
+import { addVersionBits, createVersionBits } from '../dataPatterns/versionBits'
 import { addFormatBits, createFormatBits } from '../dataPatterns/formatBits'
 import { buildMatrix, applyMatrix } from '../matrix'
 import Pixel, { PixelValue } from '../pixel'
@@ -14,7 +15,8 @@ const maskMatrix = (
   fixed: Matrix,
   data: Matrix,
   maskingFunction: MaskingFunction,
-  formatBits: number[]
+  formatBits: number[],
+  versionBits: number[]
 ) => {
   const maskedMatrix = buildMatrix<PixelValue>(fixed.length, Pixel.EMPTY)
 
@@ -30,12 +32,14 @@ const maskMatrix = (
 
   applyMatrix(maskedMatrix, fixed)
   addFormatBits(formatBits, maskedMatrix)
+  addVersionBits(versionBits, maskedMatrix)
 
   return maskedMatrix
 }
 
 export const createMaskedMatrices = (
   level: Level,
+  version: number,
   fixedMatrix: Matrix,
   dataMatrix: Matrix
 ) => {
@@ -44,10 +48,17 @@ export const createMaskedMatrices = (
     .fill(0)
     .map((_zero, index) => {
       const formatBits = createFormatBits(level, index)
+      const versionBits = createVersionBits(version)
 
       const maskingFunction: MaskingFunction = (position, pixel) =>
         mask(index, position, pixel)
 
-      return maskMatrix(fixedMatrix, dataMatrix, maskingFunction, formatBits)
+      return maskMatrix(
+        fixedMatrix,
+        dataMatrix,
+        maskingFunction,
+        formatBits,
+        versionBits
+      )
     })
 }
