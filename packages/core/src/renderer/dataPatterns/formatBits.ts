@@ -1,8 +1,8 @@
-import { Polinomial } from '../errorCorrection/Polinomial'
-import { Level } from '../level'
-import { FINDER_PATTERN_OUTER_SIZE } from './fixedPatterns/finder'
-import Pixel from './pixel'
-import { Matrix } from './types'
+import { Polinomial } from '../../errorCorrection/Polinomial'
+import { Level } from '../../level'
+import { FINDER_PATTERN_OUTER_SIZE } from '../fixedPatterns/finder'
+import Pixel from '../pixel'
+import { Matrix } from '../types'
 
 const getLevelBits = (level: Level) => {
   switch (level) {

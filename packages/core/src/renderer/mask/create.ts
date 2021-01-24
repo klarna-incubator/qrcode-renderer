@@ -1,5 +1,5 @@
 import { Level } from '../../level'
-import { addFormatBits, createFormatBits } from '../formatBits'
+import { addFormatBits, createFormatBits } from '../dataPatterns/formatBits'
 import { buildMatrix, applyMatrix } from '../matrix'
 import Pixel, { PixelValue } from '../pixel'
 import { Matrix } from '../types'

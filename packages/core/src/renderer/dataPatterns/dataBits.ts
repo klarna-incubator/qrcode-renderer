@@ -1,6 +1,6 @@
-import { TIMING_FIXED_POSITION } from './fixedPatterns/timing'
-import Pixel, { PixelValue } from './pixel'
-import { Matrix } from './types'
+import { TIMING_FIXED_POSITION } from '../fixedPatterns/timing'
+import Pixel, { PixelValue } from '../pixel'
+import { Matrix } from '../types'
 
 const direction = {
   UP: 'up',

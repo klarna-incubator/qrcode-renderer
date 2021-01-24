@@ -1,6 +1,6 @@
 import { createFormatBits } from './formatBits'
 
-describe('renderer > formatBits', () => {
+describe('renderer > dataPatterns >  formatBits', () => {
   it('creates the correct bits for a level L mask 4 pattern', () => {
     expect(createFormatBits('L', 4).join('')).toEqual('110011000101111')
   })
