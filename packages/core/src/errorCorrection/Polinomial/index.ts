@@ -101,6 +101,15 @@ export class Polinomial {
   }
 
   multiply(target: Polinomial) {
+    // When multiplying the zero polynomial, always get zero back
+    if (Object.keys(this.exponents).length === 0) {
+      return this
+    }
+
+    if (Object.keys(target.toExponents()).length === 0) {
+      return target
+    }
+
     const polinomials = Object.entries(
       this.exponents
     ).map(([lefthandSidePower, exponent]) =>

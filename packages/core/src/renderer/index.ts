@@ -5,8 +5,10 @@ import { addFinderPattern } from './fixedPatterns/finder'
 import { addAlignmentPattern } from './fixedPatterns/alignment'
 import { addFormatInformationAreaPattern } from './fixedPatterns/formatInformationArea'
 import { addVersionInformationArea } from './fixedPatterns/versionInformationArea'
-import { addDataBits } from './dataBits'
-import { buildMatrix, applyMatrix } from './matrix'
+import { addDataBits } from './dataPatterns/dataBits'
+import { buildMatrix } from './matrix'
+import { createMaskedMatrices } from './mask/create'
+import { decideBestMask } from './mask/decide'
 
 const calculateQrCodeSize = ({ version }: EncodingResult): number =>
   (version - 1) * 4 + 21
@@ -27,7 +29,13 @@ export const renderModules = (encodingResult: EncodingResult): Matrix => {
   // This will only mutate the dataMatrix
   addDataBits(encodingResult.data, fixedMatrix, dataMatrix)
 
-  applyMatrix(dataMatrix, fixedMatrix)
+  const maskedMatrices = createMaskedMatrices(
+    encodingResult.level,
+    encodingResult.version,
+    fixedMatrix,
+    dataMatrix
+  )
+  const bestMask = decideBestMask(maskedMatrices)
 
-  return dataMatrix
+  return bestMask
 }
