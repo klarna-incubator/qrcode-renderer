@@ -6,11 +6,11 @@ export const buildMatrix = <T>(size: number, initial: T) =>
     .fill(null)
     .map(() => Array<T>(size).fill(initial))
 
-export const applyMatrix = (target: Matrix, source: Matrix) => {
+export const applyMatrix = (target: Matrix, source: Matrix, offset = 0) => {
   for (let x = 0; x < source.length; ++x) {
     for (let y = 0; y < source.length; ++y) {
       if (source[y][x] !== Pixel.EMPTY) {
-        target[y][x] = source[y][x]
+        target[y + offset][x + offset] = source[y][x]
       }
     }
   }

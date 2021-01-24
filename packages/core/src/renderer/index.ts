@@ -37,7 +37,5 @@ export const renderModules = (encodingResult: EncodingResult): Matrix => {
   )
   const bestMask = decideBestMask(maskedMatrices)
 
-  // add format and version information
-
   return bestMask
 }

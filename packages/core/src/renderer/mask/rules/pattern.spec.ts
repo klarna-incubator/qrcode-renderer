@@ -19,11 +19,4 @@ describe('renderer > mask > rules > pattern > penalizeSquaresInColumn', () => {
   it('assigns 40 points for each time the pattern appears', () => {
     expect(penalizePatternInRow([...pattern, 0, 0, 0, 0, ...pattern])).toBe(80)
   })
-
-  it('assings 40 points to a row that contains the pattern, but has the zeroes outside of the visible area', () => {
-    expect(penalizePatternInRow([...pattern, 1, 1, 1])).toBe(40)
-    expect(penalizePatternInRow([0, ...pattern, 1, 1, 1])).toBe(40)
-    expect(penalizePatternInRow([0, 0, ...pattern, 1, 1, 1])).toBe(40)
-    expect(penalizePatternInRow([0, 0, 0, ...pattern, 1, 1, 1])).toBe(40)
-  })
 })

@@ -12,14 +12,7 @@ export const penalizePatternInRow = (row: PixelValue[]) => {
 
     num += fromThisPoint.startsWith(fourWhites + pattern) ? 1 : 0
 
-    if (fromThisPoint.startsWith(pattern + fourWhites)) {
-      num += 1
-    } else if (index < 4 && fromThisPoint.startsWith(pattern)) {
-      // We count cells outside of the QRcode as white for this purpose
-      if (row.slice(0, index).every(cell => cell === Pixel.WHITE)) {
-        num += 1
-      }
-    }
+    num += fromThisPoint.startsWith(pattern + fourWhites) ? 1 : 0
 
     return num
   }, 0)

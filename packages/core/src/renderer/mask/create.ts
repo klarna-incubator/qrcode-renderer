@@ -1,4 +1,5 @@
 import { Level } from '../../level'
+import { wrapWithQuietZone } from '../fixedPatterns/quietZone'
 import { addVersionBits, createVersionBits } from '../dataPatterns/versionBits'
 import { addFormatBits, createFormatBits } from '../dataPatterns/formatBits'
 import { buildMatrix, applyMatrix } from '../matrix'
@@ -34,7 +35,7 @@ const maskMatrix = (
   addFormatBits(formatBits, maskedMatrix)
   addVersionBits(versionBits, maskedMatrix)
 
-  return maskedMatrix
+  return wrapWithQuietZone(maskedMatrix)
 }
 
 export const createMaskedMatrices = (
