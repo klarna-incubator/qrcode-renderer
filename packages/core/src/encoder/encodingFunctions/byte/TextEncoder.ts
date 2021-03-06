@@ -1,5 +1,8 @@
-const NodeTextEncoder = global.TextEncoder
-  ? global.TextEncoder
-  : require('util').TextEncoder
+import global from './global'
 
-export default NodeTextEncoder
+export const TextEncoder =
+  'TextEncoder' in global
+    ? // browsers
+      global.TextEncoder
+    : // nodejs
+      require('util').TextEncoder
